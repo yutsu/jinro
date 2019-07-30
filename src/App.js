@@ -11,6 +11,8 @@ import ResultOfNight from './components/ResultOfNight';
 import RoleOptions from './components/RoleOptions';
 import ListToBeExiled from './components/ListToBeExiled';
 import ConfirmIdentity from './components/ConfirmIdentity';
+import ConfirmChoice from './components/ConfirmChoice';
+import OutcomeOfSeer from './components/OutcomeOfSeer';
 import SelectRoles from './components/SelectRoles';
 import ShowRole from './components/ShowRole';
 import {Villager, Werewolf, Seer, Knight} from './components/Roles';
@@ -35,6 +37,7 @@ class WerewolfGame extends React.Component {
     this.morningPhase = this.morningPhase.bind(this);
     this.nightPhase = this.nightPhase.bind(this);
     this.nightConfirmPhase = this.nightConfirmPhase.bind(this);
+    this.choiceConfirmPhase = this.choiceConfirmPhase.bind(this);
     this.nextPlayer = this.nextPlayer.bind(this);
     this.exile = this.exile.bind(this);
     this.removeProtection = this.removeProtection.bind(this);
@@ -51,7 +54,9 @@ class WerewolfGame extends React.Component {
       current_player_id: 0,
       night_action_to_be_killed: [],
       to_be_exiled: [],
-      outcome_of_seer: []
+      outcome_of_seer: [],
+      to_be_confirmed: [],
+      hide_options: false
     };
   }
   componentDidMount() {
@@ -176,9 +181,11 @@ class WerewolfGame extends React.Component {
     } else if (current_role === 'knight') {
       target_player.protected = true
     } else {
-      console.log('unknown role')
+      console.log('unknown role');
+      console.log(current_player_id, current_role, target_player, n_players);
     }
 
+    this.setState({hide_options: true});
 
 
     // this.nextPlayer(current_player_id, current_role, n_players)
@@ -199,6 +206,8 @@ class WerewolfGame extends React.Component {
       this.setState(() => ({ current_player_id: 0 }));
       this.setState(() => ({ phase: 'night_action_completed' }));
     }
+
+    this.setState({hide_options: false});
   }
 
   handleKilledAtNight(){
@@ -331,6 +340,13 @@ class WerewolfGame extends React.Component {
     }))
   }
 
+  choiceConfirmPhase(info) {
+    this.setState({ to_be_confirmed:[info]});
+    this.setState(() => ({
+    phase: 'choice_confirm'
+    }))
+  }
+
   render() {
     const subtitle = 'プレイヤーを登録してください';
     let register = (<div>
@@ -372,14 +388,32 @@ class WerewolfGame extends React.Component {
         />
       </div>)
 
+    let choice_confirm = (
+      <div>
+        <ConfirmChoice
+          to_be_confirmed={this.state.to_be_confirmed}
+          nightPhase={this.nightPhase}
+          nightActionRecord={this.nightActionRecord}
+          hide_options={this.state.hide_options}
+        />
+        <OutcomeOfSeer
+          current_player_id={this.state.current_player_id}
+          players_with_roles={this.state.players_with_roles}
+          outcome_of_seer={this.state.outcome_of_seer}
+          nextPlayer={this.nextPlayer}
+          hide_options={this.state.hide_options}
+        />
+      </div>)
+
     let night = (
       <div>
       <ShowRole
         current_player_id={this.state.current_player_id}
         players_with_roles={this.state.players_with_roles}
-        nightActionRecord={this.nightActionRecord}
+
         nextPlayer={this.nextPlayer}
         outcome_of_seer={this.state.outcome_of_seer}
+        choiceConfirmPhase={this.choiceConfirmPhase}
       />
       </div>
       );
@@ -429,6 +463,10 @@ class WerewolfGame extends React.Component {
     } else if (this.state.phase === 'night'){
       return (
         night
+        );
+    } else if (this.state.phase === 'choice_confirm'){
+      return (
+        choice_confirm
         );
     } else if (this.state.phase === 'night_action_completed'){
       return (

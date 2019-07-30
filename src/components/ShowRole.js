@@ -18,14 +18,9 @@ const ShowRole = (props) => {
           players_with_roles={props.players_with_roles}
           nightActionRecord={props.nightActionRecord}
           nextPlayer={props.nextPlayer}
+          choiceConfirmPhase={props.choiceConfirmPhase}
         />
-        <OutcomeOfSeer
-          current_player={player}
-          outcome_of_seer={props.outcome_of_seer}
-          current_player_id={props.current_player_id}
-          players_with_roles={props.players_with_roles}
-          nextPlayer={props.nextPlayer}
-        />
+
         <DisplayWerewolves
           current_player={player}
           players_with_roles={props.players_with_roles}

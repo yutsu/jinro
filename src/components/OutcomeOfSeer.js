@@ -3,18 +3,19 @@
 import React from 'react';
 
 const OutcomeOfSeer = (props) => {
+    let current_player = props.players_with_roles[props.current_player_id];
     let next_player = (
         <button
           key="ShowListOfPlayersNextPlayer"
           onClick={(e) => {
-            props.nextPlayer(props.current_player_id, props.current_player.role,  Object.keys(props.players_with_roles).length)
+            props.nextPlayer(props.current_player_id, current_player.role,  Object.keys(props.players_with_roles).length)
           }}
         >
         次のプレーヤーへ
         </button>
         )
 
-    if (props.current_player.role === 'seer'){
+    if (current_player.role === 'seer' && props.hide_options){
         try{
             return (
                 <div>
@@ -26,16 +27,21 @@ const OutcomeOfSeer = (props) => {
         catch(err){
             return (
                 <div>
-                    {next_player}
                 </div>)
         }
 
+    } else if (props.hide_options){
+        return (
+            <div>
+            {next_player}
+            </div>)
     } else {
         return (
             <div>
-                {next_player}
+
             </div>)
     }
+
 
 }
 
