@@ -13,13 +13,9 @@ import ListToBeExiled from './components/ListToBeExiled';
 import ConfirmIdentity from './components/ConfirmIdentity';
 import SelectRoles from './components/SelectRoles';
 import ShowRole from './components/ShowRole';
-import {Villager, Werewolf, Seer} from './components/Roles';
+import {Villager, Werewolf, Seer, Knight} from './components/Roles';
 
 
-const JapaneseNames = {
-  'villager': '村人',
-  'werewolf': '人狼'
-}
 
 
 class WerewolfGame extends React.Component {
@@ -41,6 +37,7 @@ class WerewolfGame extends React.Component {
     this.nightConfirmPhase = this.nightConfirmPhase.bind(this);
     this.nextPlayer = this.nextPlayer.bind(this);
     this.exile = this.exile.bind(this);
+    this.removeProtection = this.removeProtection.bind(this);
     this.restart = this.restart.bind(this);
     this.state = {
       players: [],
@@ -53,7 +50,8 @@ class WerewolfGame extends React.Component {
       suspected_players: [],
       current_player_id: 0,
       night_action_to_be_killed: [],
-      to_be_exiled: []
+      to_be_exiled: [],
+      outcome_of_seer: []
     };
   }
   componentDidMount() {
@@ -150,6 +148,12 @@ class WerewolfGame extends React.Component {
             players_with_roles: prevState.players_with_roles.concat(player)
           }));
         }
+        if (roles[i] === 'knight') {
+          let player = new Knight(this.state.players[i], true, 'knight', 0, true)
+          this.setState((prevState) => ({
+            players_with_roles: prevState.players_with_roles.concat(player)
+          }));
+        }
       }
 
     } else{
@@ -167,16 +171,22 @@ class WerewolfGame extends React.Component {
               night_action_to_be_killed: [target_player]
             }));
 
+    } else if (current_role === 'seer') {
+      this.setState({ outcome_of_seer: [target_player]})
+    } else if (current_role === 'knight') {
+      target_player.protected = true
     } else {
-      console.log('todo')
+      console.log('unknown role')
     }
 
 
 
-    this.nextPlayer(current_player_id, current_role, target_player, n_players)
+    // this.nextPlayer(current_player_id, current_role, n_players)
 }
 
-  nextPlayer(currentPlayerId, current_role, target_player, n_players) {
+  nextPlayer(currentPlayerId, current_role, n_players) {
+    this.setState({ outcome_of_seer: []})
+
     currentPlayerId ++;
     if (currentPlayerId < n_players){
      this.setState(() => ({ current_player_id: currentPlayerId }));
@@ -194,8 +204,11 @@ class WerewolfGame extends React.Component {
   handleKilledAtNight(){
 
     let killed_player = this.state.night_action_to_be_killed[0];
+    if (killed_player.protected) {
+      return 'いませんでした｡'
+    }
     killed_player.alive = false;
-    return killed_player.name
+    return killed_player.name + 'さんでした｡'
   }
 
   mostSuspiciousPlayer(dead){
@@ -242,6 +255,10 @@ class WerewolfGame extends React.Component {
     }));
   }
 
+  removeProtection () {
+    this.state.players_with_roles.map((player) => player.protected = false)
+  }
+
 
   restart() {
     console.log('restart')
@@ -252,6 +269,7 @@ class WerewolfGame extends React.Component {
     this.setState(() => ({ current_player_id: 0 }));
     this.setState(() => ({ night_action_to_be_killed: [] }));
     this.setState(() => ({ to_be_exiled: []}));
+    this.setState(() => ({ outcome_of_seer: []}))
   }
 
 
@@ -361,6 +379,7 @@ class WerewolfGame extends React.Component {
         players_with_roles={this.state.players_with_roles}
         nightActionRecord={this.nightActionRecord}
         nextPlayer={this.nextPlayer}
+        outcome_of_seer={this.state.outcome_of_seer}
       />
       </div>
       );
@@ -375,6 +394,7 @@ class WerewolfGame extends React.Component {
           handleWinningSide={this.handleWinningSide}
           mostSuspiciousPlayer={this.mostSuspiciousPlayer}
           morningPhase={this.morningPhase}
+          removeProtection={this.removeProtection}
           restart={this.restart}
         />
       </div>);

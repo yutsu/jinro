@@ -1,10 +1,12 @@
+// Used in ShowRole.js
+
 import React from 'react';
 
 const ShowListOfPlayers = (props) => {
   return(
     <div>
       {props.players_with_roles.map((player) => {
-        if (player !== props.current_player && player.alive){
+        if (player !== props.current_player && player.alive && !(props.current_player.role === 'werewolf' && !player.killable)){
           return (
             <button
               key={player.name}
@@ -14,7 +16,7 @@ const ShowListOfPlayers = (props) => {
             >
               {player.name}さんを選ぶ｡
             </button>
-            )
+          )
         }
       })}
     </div>

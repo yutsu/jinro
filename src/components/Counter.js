@@ -1,9 +1,5 @@
 import React from 'react';
 
-const JapaneseNames = {
-  'villager': '村人',
-  'werewolf': '人狼'
-}
 
 export default class Counter extends React.Component {
   constructor(props) {
@@ -59,7 +55,7 @@ export default class Counter extends React.Component {
     return (
       <div>
 
-        <p>{JapaneseNames[this.props.role]}:{this.state.count}</p>
+        <p>{this.props.role_jp}:{this.state.count}</p>
         <button onClick={this.handleAddOne}>+1</button>
         <button onClick={this.handleMinusOne}>-1</button>
         <button onClick={this.handleReset}>reset</button>

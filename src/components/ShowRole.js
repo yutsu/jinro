@@ -1,10 +1,7 @@
 import React from 'react';
 import ShowListOfPlayers from './ShowListOfPlayers';
-
-const JapaneseNames = {
-  'villager': '村人',
-  'werewolf': '人狼'
-}
+import OutcomeOfSeer from './OutcomeOfSeer';
+import DisplayWerewolves from './DisplayWerewolves';
 
 const ShowRole = (props) => {
   let player = props.players_with_roles[props.current_player_id];
@@ -13,13 +10,25 @@ const ShowRole = (props) => {
   if (player.alive){
     return(
       <div>
-        <p>{name}さんは{JapaneseNames[player.role]}です｡</p>
+        <p>{name}さんは{player.role_jp}です｡</p>
         <p>{player.action_sentence}</p>
         <ShowListOfPlayers
           current_player={player}
           current_player_id={props.current_player_id}
           players_with_roles={props.players_with_roles}
           nightActionRecord={props.nightActionRecord}
+          nextPlayer={props.nextPlayer}
+        />
+        <OutcomeOfSeer
+          current_player={player}
+          outcome_of_seer={props.outcome_of_seer}
+          current_player_id={props.current_player_id}
+          players_with_roles={props.players_with_roles}
+          nextPlayer={props.nextPlayer}
+        />
+        <DisplayWerewolves
+          current_player={player}
+          players_with_roles={props.players_with_roles}
         />
       </div>
       );
