@@ -1,6 +1,5 @@
 import React from 'react';
 import ShowListOfPlayers from './ShowListOfPlayers';
-import OutcomeOfSeer from './OutcomeOfSeer';
 import DisplayWerewolves from './DisplayWerewolves';
 
 const ShowRole = (props) => {

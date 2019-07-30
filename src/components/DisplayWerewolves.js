@@ -9,12 +9,16 @@ const DisplayWerewolves = (props) => {
                     return (
                         <p key={player.name}>{player.name}さんも{player.role_jp}です｡</p>
                     )
+                  } else {
+                    return (
+                        <div key={player.name + 'else'}>
+                        </div>)
                   }
                 })}
             </div>)
     } else {
         return (
-            <div>
+            <div key='DisplayWerewolves.js-1'>
 
             </div>)
     }

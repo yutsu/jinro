@@ -18,6 +18,8 @@ const ShowListOfPlayers = (props) => {
               {player.name}さんを選ぶ｡
             </button>
           )
+        } else {
+          return (<div key={player.name +'else'}></div>)
         }
       })}
     </div>

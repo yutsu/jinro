@@ -17,6 +17,8 @@ const ListToBeExiled = (props) => {
               {player.name}さんを追放
             </button>
             )
+          } else {
+            return (<div key='ListToBeExiled-else'></div>)
           }
       })}
     </div>

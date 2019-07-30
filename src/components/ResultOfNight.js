@@ -1,4 +1,5 @@
 import React from 'react';
+import WhoWon from './WhoWon';
 
 const ResultOfNight = (props) => {
   let x = props.handleKilledAtNight(props.turn);
@@ -14,6 +15,10 @@ const ResultOfNight = (props) => {
     victim = x + 'さんでした。'
   }
 
+  let who_won = (<WhoWon
+          winning_side={y}
+          players_with_roles={props.players_with_roles}
+        />)
 
   if (y === -1) {
     return(
@@ -36,7 +41,9 @@ const ResultOfNight = (props) => {
     return(
       <div>
         <p>{props.turn === 1? "" : '昨日の犠牲者は' + victim}</p>
+
         <h1>人狼の勝利!</h1>
+        {who_won}
         <button
         onClick={props.restart}
         >
@@ -49,6 +56,7 @@ const ResultOfNight = (props) => {
       <div>
         <p>{props.turn === 1? "" : '昨日の犠牲者は' + victim}</p>
         <h1>村人の勝利!</h1>
+        {who_won}
         <button
         onClick={props.restart}
         >

@@ -16,6 +16,7 @@ import ConfirmChoiceAtExile from './components/ConfirmChoiceAtExile';
 import OutcomeOfSeer from './components/OutcomeOfSeer';
 import SelectRoles from './components/SelectRoles';
 import ShowRole from './components/ShowRole';
+import Timer from './components/Timer';
 import {Villager, Werewolf, Seer, Knight, Traitor} from './components/Roles';
 
 
@@ -45,6 +46,7 @@ class WerewolfGame extends React.Component {
     this.exile = this.exile.bind(this);
     this.removeProtection = this.removeProtection.bind(this);
     this.restart = this.restart.bind(this);
+    this.setTimerSeconds = this.setTimerSeconds.bind(this);
     this.state = {
       players: [],
       players_selected: false,
@@ -291,6 +293,20 @@ class WerewolfGame extends React.Component {
     this.state.players_with_roles.map((player) => player.protected = false)
   }
 
+  setTimerSeconds() {
+    let n_alive_players = this.numberOfAliveVillagers() + this.numberOfAliveWerewolves;
+
+    if (n_alive_players < 4) {
+      return 120
+    } else if (n_alive_players === 4) {
+      return 180
+    } else if (n_alive_players === 5) {
+      return 240
+    } else {
+      return 300
+    }
+  }
+
 
   restart() {
     console.log('restart')
@@ -477,6 +493,7 @@ class WerewolfGame extends React.Component {
           mostSuspiciousPlayer={this.mostSuspiciousPlayer}
           morningPhase={this.morningPhase}
           removeProtection={this.removeProtection}
+          players_with_roles={this.state.players_with_roles}
           turn={this.state.turn}
           restart={this.restart}
         />
@@ -490,6 +507,9 @@ class WerewolfGame extends React.Component {
           exile={this.exile}
           choiceConfirmAtExilePhase={this.choiceConfirmAtExilePhase}
         />
+        <Timer
+          setTimerSeconds={this.setTimerSeconds}
+        />
       </div>);
 
     let morning_result = (
@@ -499,6 +519,7 @@ class WerewolfGame extends React.Component {
           to_be_exiled={this.state.to_be_exiled}
           nightPhase={this.nightPhase}
           restart={this.restart}
+          players_with_roles={this.state.players_with_roles}
         />
       </div>);
 
