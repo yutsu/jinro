@@ -15,7 +15,7 @@ const OutcomeOfSeer = (props) => {
         </button>
         )
 
-    if (current_player.role === 'seer' && props.hide_options){
+    if (current_player.role === 'seer' && props.hide_options && props.turn > 1){
         try{
             return (
                 <div>

@@ -7,7 +7,7 @@ const DisplayWerewolves = (props) => {
                 {props.players_with_roles.map((player) => {
                   if (player !== props.current_player && player.role === 'werewolf'){
                     return (
-                        <p>{player.name}さんも{player.role_jp}です｡</p>
+                        <p key={player.name}>{player.name}さんも{player.role_jp}です｡</p>
                     )
                   }
                 })}

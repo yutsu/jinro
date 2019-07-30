@@ -39,6 +39,7 @@ class WerewolfGame extends React.Component {
     this.nightConfirmPhase = this.nightConfirmPhase.bind(this);
     this.choiceConfirmPhase = this.choiceConfirmPhase.bind(this);
     this.nextPlayer = this.nextPlayer.bind(this);
+    this.nextTurn = this.nextTurn.bind(this);
     this.exile = this.exile.bind(this);
     this.removeProtection = this.removeProtection.bind(this);
     this.restart = this.restart.bind(this);
@@ -56,7 +57,8 @@ class WerewolfGame extends React.Component {
       to_be_exiled: [],
       outcome_of_seer: [],
       to_be_confirmed: [],
-      hide_options: false
+      hide_options: false,
+      turn: 1
     };
   }
   componentDidMount() {
@@ -167,7 +169,7 @@ class WerewolfGame extends React.Component {
   }
 
   nightActionRecord(current_player_id, current_role, target_player, n_players) {
-    if (current_role === 'villager') {
+    if (current_role === 'villager' || this.state.turn === 1) {
       this.setState((prevState) => ({
               suspected_players: prevState.suspected_players.concat(target_player.name)
             }));
@@ -210,14 +212,17 @@ class WerewolfGame extends React.Component {
     this.setState({hide_options: false});
   }
 
-  handleKilledAtNight(){
+  handleKilledAtNight(turn){
 
     let killed_player = this.state.night_action_to_be_killed[0];
-    if (killed_player.protected) {
-      return 'いませんでした｡'
+    if (turn ===1 || killed_player.protected) {
+      return -1
     }
-    killed_player.alive = false;
-    return killed_player.name + 'さんでした｡'
+
+    if (turn !== 1) {
+      killed_player.alive = false;
+    }
+    return killed_player.name
   }
 
   mostSuspiciousPlayer(dead){
@@ -278,7 +283,8 @@ class WerewolfGame extends React.Component {
     this.setState(() => ({ current_player_id: 0 }));
     this.setState(() => ({ night_action_to_be_killed: [] }));
     this.setState(() => ({ to_be_exiled: []}));
-    this.setState(() => ({ outcome_of_seer: []}))
+    this.setState(() => ({ outcome_of_seer: []}));
+    this.setState(() => ({ turn: 1}));
   }
 
 
@@ -326,6 +332,7 @@ class WerewolfGame extends React.Component {
     this.setState(() => ({
     phase: 'morning'
     }))
+    this.nextTurn()
   }
 
   nightPhase() {
@@ -344,6 +351,12 @@ class WerewolfGame extends React.Component {
     this.setState({ to_be_confirmed:[info]});
     this.setState(() => ({
     phase: 'choice_confirm'
+    }))
+  }
+
+  nextTurn() {
+    this.setState((prevState) => ({
+      turn: prevState.turn + 1
     }))
   }
 
@@ -401,6 +414,7 @@ class WerewolfGame extends React.Component {
           players_with_roles={this.state.players_with_roles}
           outcome_of_seer={this.state.outcome_of_seer}
           nextPlayer={this.nextPlayer}
+          turn={this.state.turn}
           hide_options={this.state.hide_options}
         />
       </div>)
@@ -410,7 +424,7 @@ class WerewolfGame extends React.Component {
       <ShowRole
         current_player_id={this.state.current_player_id}
         players_with_roles={this.state.players_with_roles}
-
+        turn={this.state.turn}
         nextPlayer={this.nextPlayer}
         outcome_of_seer={this.state.outcome_of_seer}
         choiceConfirmPhase={this.choiceConfirmPhase}
@@ -429,6 +443,7 @@ class WerewolfGame extends React.Component {
           mostSuspiciousPlayer={this.mostSuspiciousPlayer}
           morningPhase={this.morningPhase}
           removeProtection={this.removeProtection}
+          turn={this.state.turn}
           restart={this.restart}
         />
       </div>);
