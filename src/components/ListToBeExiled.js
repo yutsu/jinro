@@ -9,7 +9,8 @@ const ListToBeExiled = (props) => {
             <button
               key={player.name}
               onClick={(e) => {
-                props.exile(player)
+                // props.exile(player)
+                props.choiceConfirmAtExilePhase(player)
                 }
               }
             >

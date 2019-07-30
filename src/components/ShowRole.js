@@ -33,8 +33,8 @@ const ShowRole = (props) => {
       <div>
         <p>{name}さんは死んでいます｡</p>
         <button
-        onClick={(e) => (
-          props.nextPlayer(props.current_player_id, player.role, player, Object.keys(props.players_with_roles).length))
+        onClick={() => (
+          props.nextPlayer(props.current_player_id, player.role, Object.keys(props.players_with_roles).length))
           }
         >
         次のプレーヤーへ

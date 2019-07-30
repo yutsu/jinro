@@ -12,6 +12,7 @@ import RoleOptions from './components/RoleOptions';
 import ListToBeExiled from './components/ListToBeExiled';
 import ConfirmIdentity from './components/ConfirmIdentity';
 import ConfirmChoice from './components/ConfirmChoice';
+import ConfirmChoiceAtExile from './components/ConfirmChoiceAtExile';
 import OutcomeOfSeer from './components/OutcomeOfSeer';
 import SelectRoles from './components/SelectRoles';
 import ShowRole from './components/ShowRole';
@@ -38,6 +39,7 @@ class WerewolfGame extends React.Component {
     this.nightPhase = this.nightPhase.bind(this);
     this.nightConfirmPhase = this.nightConfirmPhase.bind(this);
     this.choiceConfirmPhase = this.choiceConfirmPhase.bind(this);
+    this.choiceConfirmAtExilePhase = this.choiceConfirmAtExilePhase.bind(this);
     this.nextPlayer = this.nextPlayer.bind(this);
     this.nextTurn = this.nextTurn.bind(this);
     this.exile = this.exile.bind(this);
@@ -138,25 +140,25 @@ class WerewolfGame extends React.Component {
 
       for (let i=0; i < roles.length; i++) {
         if (roles[i] === 'villager') {
-          let player = new Villager(this.state.players[i], true, 'villager', 0, true)
+          let player = new Villager(this.state.players[i], 'villager', 0, true)
           this.setState((prevState) => ({
             players_with_roles: prevState.players_with_roles.concat(player)
           }));
         }
         if (roles[i] === 'werewolf') {
-          let player = new Werewolf(this.state.players[i], true, 'werewolf', 1, true)
+          let player = new Werewolf(this.state.players[i], 'werewolf', 1, true)
           this.setState((prevState) => ({
             players_with_roles: prevState.players_with_roles.concat(player)
           }));
         }
         if (roles[i] === 'seer') {
-          let player = new Seer(this.state.players[i], true, 'seer', 0, true)
+          let player = new Seer(this.state.players[i], 'seer', 0, true)
           this.setState((prevState) => ({
             players_with_roles: prevState.players_with_roles.concat(player)
           }));
         }
         if (roles[i] === 'knight') {
-          let player = new Knight(this.state.players[i], true, 'knight', 0, true)
+          let player = new Knight(this.state.players[i], 'knight', 0, true)
           this.setState((prevState) => ({
             players_with_roles: prevState.players_with_roles.concat(player)
           }));
@@ -204,9 +206,14 @@ class WerewolfGame extends React.Component {
      phase: 'night_confirm'
      }))
 
-    } else {
+    } else if (currentPlayerId === n_players){
       this.setState(() => ({ current_player_id: 0 }));
       this.setState(() => ({ phase: 'night_action_completed' }));
+    } else {
+      console.log('something wrong with nextPlayer')
+      console.log('next player')
+      console.log(currentPlayerId)
+      console.log(n_players)
     }
 
     this.setState({hide_options: false});
@@ -354,6 +361,13 @@ class WerewolfGame extends React.Component {
     }))
   }
 
+  choiceConfirmAtExilePhase(info) {
+    this.setState({ to_be_confirmed:info});
+    this.setState(() => ({
+    phase: 'choice_confirm_at_exile'
+    }))
+  }
+
   nextTurn() {
     this.setState((prevState) => ({
       turn: prevState.turn + 1
@@ -419,6 +433,15 @@ class WerewolfGame extends React.Component {
         />
       </div>)
 
+    let choice_confirm_at_exile = (
+      <div>
+        <ConfirmChoiceAtExile
+          to_be_confirmed={this.state.to_be_confirmed}
+          morningPhase={this.morningPhase}
+          exile={this.exile}
+        />
+      </div>)
+
     let night = (
       <div>
       <ShowRole
@@ -454,6 +477,7 @@ class WerewolfGame extends React.Component {
         <ListToBeExiled
           players_with_roles={this.state.players_with_roles}
           exile={this.exile}
+          choiceConfirmAtExilePhase={this.choiceConfirmAtExilePhase}
         />
       </div>);
 
@@ -490,6 +514,10 @@ class WerewolfGame extends React.Component {
     } else if (this.state.phase === 'morning'){
       return (
         morning_exile
+        );
+    } else if (this.state.phase === 'choice_confirm_at_exile'){
+      return (
+        choice_confirm_at_exile
         );
     } else if (this.state.phase === 'morning_action_completed'){
       return (
