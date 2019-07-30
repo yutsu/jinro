@@ -31,6 +31,12 @@ const RoleOptions = (props) => {
       updateNumberOfRoles={props.updateNumberOfRoles}
       />
 
+      <Counter
+      role='traitor'
+      role_jp='裏切り者'
+      updateNumberOfRoles={props.updateNumberOfRoles}
+      />
+
       <button onClick={props.determineRoles}>決定</button>
     </div>
   );

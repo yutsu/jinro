@@ -13,6 +13,7 @@ class Villager extends Player{
     this.role = 'villager';
     this.role_jp = '村人';
     this.side = 0;
+    this.winning_side = 0
     this.killable = true;
     this.action_sentence = 'もっとも疑わしい人を一人選んでください｡';
   }
@@ -24,6 +25,7 @@ class Werewolf extends Player{
     this.role = 'werewolf';
     this.role_jp = '人狼';
     this.side = 1;
+    this.winning_side = 1
     this.killable = false;
     this.action_sentence = '今晩襲う人を決めてください｡';
   }
@@ -47,4 +49,13 @@ class Knight extends Villager{
   }
 }
 
-export {Villager, Werewolf, Seer, Knight};
+class Traitor extends Villager{
+  constructor(name){
+    super(name);
+    this.role = 'traitor';
+    this.role_jp = '裏切り者';
+    this.winning_side = 1
+  }
+}
+
+export {Villager, Werewolf, Seer, Knight, Traitor};

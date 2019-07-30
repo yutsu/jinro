@@ -16,7 +16,7 @@ import ConfirmChoiceAtExile from './components/ConfirmChoiceAtExile';
 import OutcomeOfSeer from './components/OutcomeOfSeer';
 import SelectRoles from './components/SelectRoles';
 import ShowRole from './components/ShowRole';
-import {Villager, Werewolf, Seer, Knight} from './components/Roles';
+import {Villager, Werewolf, Seer, Knight, Traitor} from './components/Roles';
 
 
 
@@ -51,8 +51,8 @@ class WerewolfGame extends React.Component {
       players_with_roles: [],
       role_determined: false,
       phase: 'night_confirm',
-      possible_roles: ['villager', 'werewolf', 'seer', 'knight'],
-      n_each_role: {'villager':0, 'werewolf':0, 'seer':0, 'knight':0},
+      possible_roles: ['villager', 'werewolf', 'seer', 'knight', 'traitor'],
+      n_each_role: {'villager':0, 'werewolf':0, 'seer':0, 'knight':0, 'traitor':0},
       suspected_players: [],
       current_player_id: 0,
       night_action_to_be_killed: [],
@@ -139,26 +139,37 @@ class WerewolfGame extends React.Component {
       }
 
       for (let i=0; i < roles.length; i++) {
+        // 村人
         if (roles[i] === 'villager') {
           let player = new Villager(this.state.players[i])
           this.setState((prevState) => ({
             players_with_roles: prevState.players_with_roles.concat(player)
           }));
         }
+        // 人狼
         if (roles[i] === 'werewolf') {
           let player = new Werewolf(this.state.players[i])
           this.setState((prevState) => ({
             players_with_roles: prevState.players_with_roles.concat(player)
           }));
         }
+        // 占い師
         if (roles[i] === 'seer') {
           let player = new Seer(this.state.players[i])
           this.setState((prevState) => ({
             players_with_roles: prevState.players_with_roles.concat(player)
           }));
         }
+        // 騎士
         if (roles[i] === 'knight') {
           let player = new Knight(this.state.players[i]);
+          this.setState((prevState) => ({
+            players_with_roles: prevState.players_with_roles.concat(player)
+          }));
+        }
+        // 裏切り者
+        if (roles[i] === 'traitor') {
+          let player = new Traitor(this.state.players[i])
           this.setState((prevState) => ({
             players_with_roles: prevState.players_with_roles.concat(player)
           }));
