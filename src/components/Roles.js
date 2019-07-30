@@ -8,7 +8,7 @@ class Player {
 }
 
 class Villager extends Player{
-  constructor(name, role, side, killable){
+  constructor(name){
     super(name);
     this.role = 'villager';
     this.role_jp = '村人';
@@ -19,7 +19,7 @@ class Villager extends Player{
 }
 
 class Werewolf extends Player{
-  constructor(name, role, side, killable){
+  constructor(name){
     super(name);
     this.role = 'werewolf';
     this.role_jp = '人狼';
@@ -30,21 +30,19 @@ class Werewolf extends Player{
 }
 
 class Seer extends Villager{
-  constructor(name, role, side, killable){
-    super(name, side);
+  constructor(name){
+    super(name);
     this.role = 'seer';
     this.role_jp = '占い師';
-    this.killable = true;
     this.action_sentence = '今晩占う人を決めてください｡'
   }
 }
 
 class Knight extends Villager{
-  constructor(name, role, side, killable){
-    super(name, side);
+  constructor(name){
+    super(name);
     this.role = 'knight';
     this.role_jp = '騎士';
-    this.killable = true;
     this.action_sentence = '今晩守る人を決めてください｡'
   }
 }

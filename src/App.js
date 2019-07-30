@@ -140,25 +140,25 @@ class WerewolfGame extends React.Component {
 
       for (let i=0; i < roles.length; i++) {
         if (roles[i] === 'villager') {
-          let player = new Villager(this.state.players[i], 'villager', 0, true)
+          let player = new Villager(this.state.players[i])
           this.setState((prevState) => ({
             players_with_roles: prevState.players_with_roles.concat(player)
           }));
         }
         if (roles[i] === 'werewolf') {
-          let player = new Werewolf(this.state.players[i], 'werewolf', 1, true)
+          let player = new Werewolf(this.state.players[i])
           this.setState((prevState) => ({
             players_with_roles: prevState.players_with_roles.concat(player)
           }));
         }
         if (roles[i] === 'seer') {
-          let player = new Seer(this.state.players[i], 'seer', 0, true)
+          let player = new Seer(this.state.players[i])
           this.setState((prevState) => ({
             players_with_roles: prevState.players_with_roles.concat(player)
           }));
         }
         if (roles[i] === 'knight') {
-          let player = new Knight(this.state.players[i], 'knight', 0, true)
+          let player = new Knight(this.state.players[i]);
           this.setState((prevState) => ({
             players_with_roles: prevState.players_with_roles.concat(player)
           }));
