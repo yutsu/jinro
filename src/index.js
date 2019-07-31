@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './styles/index.scss';
+import 'normalize.css/normalize.css';
 import WerewolfGame from './App';
 import * as serviceWorker from './serviceWorker';
 

@@ -28,14 +28,14 @@ export default class Timer extends React.Component {
   render() {
     if (this.state.remaining > 0) {
       return (
-        <div>
-          <p>残り{Math.floor(this.state.remaining / 60)}分{this.state.remaining % 60}秒以内に決めてください。</p>
+        <div className='widget'>
+          <p className='widget__message'>残り<span className='timer'>{Math.floor(this.state.remaining / 60)}分{this.state.remaining % 60}秒</span>以内に決めてください。</p>
         </div>
       );
     } else {
       return (
-        <div>
-          <p>時間になりました。 投票で追放する人を決めてください。</p>
+        <div className='widget'>
+          <p className='widget__message'>時間になりました。 投票で追放する人を決めてください。</p>
         </div>
       );
     }

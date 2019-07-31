@@ -6,7 +6,7 @@ const RoleOptions = (props) => {
     return(<div></div>)
   }
   return (
-    <div>
+    <div className='widget'>
       <Counter
       role='villager'
       role_jp='村人'
@@ -37,7 +37,9 @@ const RoleOptions = (props) => {
       updateNumberOfRoles={props.updateNumberOfRoles}
       />
 
-      <button onClick={props.determineRoles}>決定</button>
+      <button className='big-button' onClick={props.determineRoles}>
+        開始する!
+      </button>
     </div>
   );
 };

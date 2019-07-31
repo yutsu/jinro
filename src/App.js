@@ -1,9 +1,8 @@
 import React from 'react';
 // import logo from './logo.svg';
-// import './App.css';
+import './styles/App.scss';
 
 import Header from './components/Header';
-import Action from './components/Action';
 import AddOption from './components/AddOption';
 import Options from './components/Options';
 import ResultOfMorning from './components/ResultOfMorning';
@@ -13,8 +12,8 @@ import ListToBeExiled from './components/ListToBeExiled';
 import ConfirmIdentity from './components/ConfirmIdentity';
 import ConfirmChoice from './components/ConfirmChoice';
 import ConfirmChoiceAtExile from './components/ConfirmChoiceAtExile';
+import GameResult from './components/GameResult';
 import OutcomeOfSeer from './components/OutcomeOfSeer';
-import SelectRoles from './components/SelectRoles';
 import ShowRole from './components/ShowRole';
 import Timer from './components/Timer';
 import {Villager, Werewolf, Seer, Knight, Traitor} from './components/Roles';
@@ -29,7 +28,6 @@ class WerewolfGame extends React.Component {
     this.handlePick = this.handlePick.bind(this);
     this.handleAddOption = this.handleAddOption.bind(this);
     this.handleDeleteOption = this.handleDeleteOption.bind(this);
-    this.handleSelectRoles = this.handleSelectRoles.bind(this);
     this.updateNumberOfRoles = this.updateNumberOfRoles.bind(this);
     this.determineRoles = this.determineRoles.bind(this);
     this.nightActionRecord = this.nightActionRecord.bind(this);
@@ -40,6 +38,7 @@ class WerewolfGame extends React.Component {
     this.nightPhase = this.nightPhase.bind(this);
     this.nightConfirmPhase = this.nightConfirmPhase.bind(this);
     this.choiceConfirmPhase = this.choiceConfirmPhase.bind(this);
+    this.gameResultPhase = this.gameResultPhase.bind(this);
     this.choiceConfirmAtExilePhase = this.choiceConfirmAtExilePhase.bind(this);
     this.nextPlayer = this.nextPlayer.bind(this);
     this.nextTurn = this.nextTurn.bind(this);
@@ -111,10 +110,7 @@ class WerewolfGame extends React.Component {
     }));
   }
 
-  handleSelectRoles(){
-    console.log('select roles');
-    this.setState(() => ({ players_selected: true }));
-  }
+
 
   updateNumberOfRoles(num, role){
     this.setState((prevState) => (prevState.n_each_role[role] = num + (num) * (num) *prevState.n_each_role[role]));
@@ -395,6 +391,10 @@ class WerewolfGame extends React.Component {
     }))
   }
 
+  gameResultPhase(){
+    this.setState({ phase: 'game_result'})
+  }
+
   nextTurn() {
     this.setState((prevState) => ({
       turn: prevState.turn + 1
@@ -405,36 +405,33 @@ class WerewolfGame extends React.Component {
     const subtitle = 'プレイヤーを登録してください';
     let register = (<div>
         <Header subtitle={subtitle} />
-        <Action
+        <div className="container">
+
+          <div className="widget">
+            <Options
+              players={this.state.players}
+              handleDeleteOptions={this.handleDeleteOptions}
+              handleDeleteOption={this.handleDeleteOption}
+              players_selected={this.state.players_selected}
+            />
+            <AddOption
+              handleAddOption={this.handleAddOption}
+              players_selected={this.state.players_selected}
+            />
+          </div>
+
+
+          <RoleOptions
           players_selected={this.state.players_selected}
-          hasOptions={this.state.players.length > 0}
-          handlePick={this.handlePick}
-        />
-        <Options
-          players={this.state.players}
-          handleDeleteOptions={this.handleDeleteOptions}
-          handleDeleteOption={this.handleDeleteOption}
-          players_selected={this.state.players_selected}
-        />
-        <AddOption
-          handleAddOption={this.handleAddOption}
-          players_selected={this.state.players_selected}
-        />
-        <SelectRoles
-          hasOptions={this.state.players.length > 0}
-          handleSelectRoles={this.handleSelectRoles}
-        />
-        {this.state.players_selected && <p>どの役割を使いますか?</p>}
-        <RoleOptions
-        players_selected={this.state.players_selected}
-        updateNumberOfRoles={this.updateNumberOfRoles}
-        determineRoles={this.determineRoles}
-        />
+          updateNumberOfRoles={this.updateNumberOfRoles}
+          determineRoles={this.determineRoles}
+          />
+        </div>
+
       </div>);
 
     let night_confirm = (
       <div>
-      <p>プレイヤーを確認します｡</p>
         <ConfirmIdentity
           current_player_id={this.state.current_player_id}
           players_with_roles={this.state.players_with_roles}
@@ -484,7 +481,6 @@ class WerewolfGame extends React.Component {
 
     let night_result = (
       <div>
-        <p>朝になりました｡</p>
         <ResultOfNight
           suspected_players={this.suspected_players}
           night_action_to_be_killed={this.night_action_to_be_killed}
@@ -495,13 +491,12 @@ class WerewolfGame extends React.Component {
           removeProtection={this.removeProtection}
           players_with_roles={this.state.players_with_roles}
           turn={this.state.turn}
-          restart={this.restart}
+          gameResultPhase={this.gameResultPhase}
         />
       </div>);
 
     let morning_exile = (
       <div>
-        <p>追放する人を決めてください｡</p>
         <ListToBeExiled
           players_with_roles={this.state.players_with_roles}
           exile={this.exile}
@@ -517,11 +512,20 @@ class WerewolfGame extends React.Component {
         <ResultOfMorning
           handleWinningSide={this.handleWinningSide}
           to_be_exiled={this.state.to_be_exiled}
-          nightPhase={this.nightPhase}
-          restart={this.restart}
+          nightConfirmPhase={this.nightConfirmPhase}
           players_with_roles={this.state.players_with_roles}
+          gameResultPhase={this.gameResultPhase}
         />
       </div>);
+
+    let game_result = (
+      <div>
+        <GameResult
+          handleWinningSide={this.handleWinningSide}
+          players_with_roles={this.state.players_with_roles}
+          restart={this.restart}
+        />
+      </div>)
 
     if (!this.state.role_determined){
       return (
@@ -554,6 +558,10 @@ class WerewolfGame extends React.Component {
     } else if (this.state.phase === 'morning_action_completed'){
       return (
         morning_result
+        );
+    } else if (this.state.phase === 'game_result'){
+      return (
+        game_result
         );
     } else {
       return(<div>else</div>);

@@ -10,8 +10,11 @@ const ShowRole = (props) => {
   if (player.alive){
     return(
       <div>
-        <p>{name}さんは{player.role_jp}です｡</p>
-        <p>{props.turn === 1? turn_1_sentence: player.action_sentence}</p>
+        <div className='widget widget__message'>
+          <p className='msize'>{name}さんは<span className='widget__important-message bd lsize'>{player.role_jp}</span>です｡</p>
+          <p>{props.turn === 1? turn_1_sentence: player.action_sentence}</p>
+        </div>
+
         <ShowListOfPlayers
           current_player={player}
           current_player_id={props.current_player_id}
@@ -30,9 +33,10 @@ const ShowRole = (props) => {
   } else {
     return (
       <div>
-        <p>{name}さんは死んでいます｡</p>
+        <p className='widget widget__message'>{name}さんは死んでいます｡</p>
         <button
-        onClick={() => (
+          className='button'
+          onClick={() => (
           props.nextPlayer(props.current_player_id, player.role, Object.keys(props.players_with_roles).length))
           }
         >

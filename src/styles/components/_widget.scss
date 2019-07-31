@@ -1,0 +1,60 @@
+.widget {
+    background: $light-blue;
+    margin-bottom: $xl-size;
+}
+
+.widget__confirm {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@media (min-width: $desktop-breakpoint) {
+    .widget__confirm {
+        flex-direction: row;
+    }
+}
+
+.widget__message {
+    border-bottom: 1px solid lighten($light-blue, 10%);
+    color: $off-white;
+    margin: 0;
+    padding: $l-size;
+    text-align: center;
+}
+
+.widget__win-message {
+    color: $yellow;
+    margin: 0;
+    padding: $m-size;
+    text-align: center;
+}
+
+.widget__important-message {
+   color: $yellow;
+   margin: 0;
+   padding: $l-size;
+   text-align: center;
+}
+
+.widget__confirm-message {
+    border-bottom: 1px solid lighten($light-blue, 10%);
+    color: $yellow;
+    margin: 0;
+    padding: $l-size;
+    text-align: center;
+}
+
+.widget-header {
+    background: $blue;
+    color: $off-white;
+    display: flex;
+    justify-content: space-between;
+    padding: $m-size;
+}
+
+.widget-header__title {
+    margin: 0;
+}
+

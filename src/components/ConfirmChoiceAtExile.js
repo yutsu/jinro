@@ -4,18 +4,22 @@ const ConfirmChoiceAtExile = (props) => {
 
     if (!props.hide_options) {
         return (
-            <div>
-                {props.to_be_confirmed.name}さんでいいですか?
-                <button
-                    onClick={(e) => props.exile(props.to_be_confirmed)}
-                >
-                OKです｡
-                </button>
-                <button
-                    onClick={props.morningPhase}
-                >
-                考え直す｡
-                </button>
+            <div className='widget widget__confirm'>
+                <p className='widget widget__confirm-message'>{props.to_be_confirmed.name}さんでいいですか?</p>
+                <div className='button-wrapper'>
+                    <button
+                        className='button-list'
+                        onClick={(e) => props.exile(props.to_be_confirmed)}
+                    >
+                    OKです｡
+                    </button>
+                    <button
+                        className='button-list'
+                        onClick={props.morningPhase}
+                    >
+                    考え直す｡
+                    </button>
+                </div>
             </div>)
     } else {
         return (
