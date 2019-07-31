@@ -2,18 +2,18 @@ import React from 'react';
 // import logo from './logo.svg';
 import './styles/App.scss';
 
-import Header from './components/Header';
 import AddOption from './components/AddOption';
-import Options from './components/Options';
-import ResultOfMorning from './components/ResultOfMorning';
-import ResultOfNight from './components/ResultOfNight';
-import RoleOptions from './components/RoleOptions';
-import ListToBeExiled from './components/ListToBeExiled';
 import ConfirmIdentity from './components/ConfirmIdentity';
 import ConfirmChoice from './components/ConfirmChoice';
 import ConfirmChoiceAtExile from './components/ConfirmChoiceAtExile';
 import GameResult from './components/GameResult';
+import Header from './components/Header';
+import ListToBeExiled from './components/ListToBeExiled';
+import Options from './components/Options';
 import OutcomeOfSeer from './components/OutcomeOfSeer';
+import ResultOfMorning from './components/ResultOfMorning';
+import ResultOfNight from './components/ResultOfNight';
+import RoleOptions from './components/RoleOptions';
 import ShowRole from './components/ShowRole';
 import Timer from './components/Timer';
 import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic} from './components/Roles';
@@ -46,6 +46,7 @@ class WerewolfGame extends React.Component {
     this.exile = this.exile.bind(this);
     this.exile2 = this.exile2.bind(this);
     this.removeProtection = this.removeProtection.bind(this);
+    this.resetSuspectedPlayers = this.resetSuspectedPlayers.bind(this);
     this.restart = this.restart.bind(this);
     this.setTimerSeconds = this.setTimerSeconds.bind(this);
     this.state = {
@@ -308,6 +309,7 @@ class WerewolfGame extends React.Component {
     player.alive = false;
     this.exile2(player.name, player.side); // Can't do exile2(player)
     this.morningActionCompletedPhase();
+    this.resetSuspectedPlayers();
   }
   exile2(player, side) {
     this.setState((prevState) => ({to_be_exiled: [player, side] }));
@@ -337,6 +339,9 @@ class WerewolfGame extends React.Component {
     }
   }
 
+  resetSuspectedPlayers () {
+    this.setState(() => ({ suspected_players: []}))
+  }
 
   restart() {
     console.log('restart')
