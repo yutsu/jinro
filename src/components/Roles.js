@@ -77,7 +77,6 @@ class Baker extends Villager{
     this.role = 'baker';
     this.role_jp = 'パン屋さん';
     this.action_sentence = 'もっとも疑わしい人を一人選んでください｡';
-    this.morning_sentence = 'パンの香ばしい香りが漂っています。'
   }
 }
 

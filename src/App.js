@@ -39,6 +39,7 @@ class WerewolfGame extends React.Component {
     this.nightConfirmPhase = this.nightConfirmPhase.bind(this);
     this.choiceConfirmPhase = this.choiceConfirmPhase.bind(this);
     this.gameResultPhase = this.gameResultPhase.bind(this);
+    this.isBakerAlive = this.isBakerAlive.bind(this);
     this.choiceConfirmAtExilePhase = this.choiceConfirmAtExilePhase.bind(this);
     this.nextPlayer = this.nextPlayer.bind(this);
     this.nextTurn = this.nextTurn.bind(this);
@@ -337,6 +338,16 @@ class WerewolfGame extends React.Component {
     this.setState(() => ({ turn: 1}));
   }
 
+  isBakerAlive() {
+    let alive = false;
+    let x;
+    for (x of this.state.players_with_roles) {
+      if (x.role === 'baker' && x.alive) {
+        alive = true
+      }
+    }
+    return alive
+  }
 
   numberOfPlayers(){
     return(this.state.players.length)
@@ -512,6 +523,7 @@ class WerewolfGame extends React.Component {
           players_with_roles={this.state.players_with_roles}
           turn={this.state.turn}
           gameResultPhase={this.gameResultPhase}
+          isBakerAlive={this.isBakerAlive}
         />
       </div>);
 

@@ -6,7 +6,7 @@ const ResultOfNight = (props) => {
   props.removeProtection(); // xの後におくこと
   let y = props.handleWinningSide();
   let suspected_players = props.mostSuspiciousPlayer(x);
-
+  let baker_alive = props.isBakerAlive();
 
   let victim;
   if (x === -1) {
@@ -21,6 +21,7 @@ const ResultOfNight = (props) => {
     <div className='widget'>
       <div className='widget widget__message'>
         <p className='option option__text'>朝になりました｡</p>
+        {baker_alive ? <p className='option option__text'>パンの香ばしい香りが漂っています。</p>: <span></span>}
         <p className='option option__text'>{props.turn === 1? "" : '昨日の犠牲者は' + victim}</p>
         <p className='option option__text'>今もっとも疑われている人は</p>
         {suspected_players.map((player) => {
