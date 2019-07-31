@@ -76,8 +76,17 @@ class Baker extends Villager{
     super(name);
     this.role = 'baker';
     this.role_jp = 'パン屋さん';
-    this.action_sentence = 'もっとも疑わしい人を一人選んでください｡';
   }
 }
 
-export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker};
+class Psychic extends Villager{
+  constructor(name){
+    super(name);
+    this.role = 'psychic';
+    this.role_jp = '霊媒師';
+    this.night_action = 'perceive'
+  }
+}
+
+
+export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic};

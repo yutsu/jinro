@@ -3,10 +3,6 @@ import React from 'react';
 const ListToBeExiled = (props) => {
   return(
     <div>
-      <div className="widget">
-        <p className='widget__message'>追放する人を決めてください｡</p>
-      </div>
-
       <div className='button-wrapper'>
         {props.players_with_roles.map((player) => {
           if (player.alive){

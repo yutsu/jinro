@@ -16,7 +16,7 @@ import GameResult from './components/GameResult';
 import OutcomeOfSeer from './components/OutcomeOfSeer';
 import ShowRole from './components/ShowRole';
 import Timer from './components/Timer';
-import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker} from './components/Roles';
+import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic} from './components/Roles';
 
 
 
@@ -44,6 +44,7 @@ class WerewolfGame extends React.Component {
     this.nextPlayer = this.nextPlayer.bind(this);
     this.nextTurn = this.nextTurn.bind(this);
     this.exile = this.exile.bind(this);
+    this.exile2 = this.exile2.bind(this);
     this.removeProtection = this.removeProtection.bind(this);
     this.restart = this.restart.bind(this);
     this.setTimerSeconds = this.setTimerSeconds.bind(this);
@@ -53,7 +54,7 @@ class WerewolfGame extends React.Component {
       players_with_roles: [],
       role_determined: false,
       phase: 'night_confirm',
-      possible_roles: ['villager', 'werewolf', 'seer', 'knight', 'traitor', 'werewolf_believer', 'baker'],
+      possible_roles: ['villager', 'werewolf', 'seer', 'knight', 'traitor', 'werewolf_believer', 'baker', 'psychic'],
       n_each_role: {
         'villager':0,
         'werewolf':0,
@@ -61,7 +62,8 @@ class WerewolfGame extends React.Component {
         'knight':0,
         'traitor':0,
         'werewolf_believer': 0,
-        'baker': 0
+        'baker': 0,
+        'psychic': 0
       },
       suspected_players: [],
       current_player_id: 0,
@@ -195,6 +197,13 @@ class WerewolfGame extends React.Component {
             players_with_roles: prevState.players_with_roles.concat(player)
           }));
         }
+        // 霊媒師
+        if (roles[i] === 'psychic') {
+          let player = new Psychic(this.state.players[i])
+          this.setState((prevState) => ({
+            players_with_roles: prevState.players_with_roles.concat(player)
+          }));
+        }
       }
 
     } else{
@@ -250,9 +259,13 @@ class WerewolfGame extends React.Component {
   }
 
   handleKilledAtNight(turn){
+    // This case is for development purpose
+    if (this.state.night_action_to_be_killed.length === 0) {
+      return -1
+    }
 
     let killed_player = this.state.night_action_to_be_killed[0];
-    if (turn ===1 || killed_player.protected) {
+    if (turn === 1 || killed_player.protected) {
       return -1
     }
 
@@ -293,11 +306,11 @@ class WerewolfGame extends React.Component {
   }
   exile(player) {
     player.alive = false;
-    this.exile2(player.name);
+    this.exile2(player.name, player.side); // Can't do exile2(player)
     this.morningActionCompletedPhase();
   }
-  exile2(player) {
-    this.setState((prevState) => ({to_be_exiled: [player] }));
+  exile2(player, side) {
+    this.setState((prevState) => ({to_be_exiled: [player, side] }));
   }
 
   morningActionCompletedPhase() {
@@ -506,6 +519,7 @@ class WerewolfGame extends React.Component {
         nextPlayer={this.nextPlayer}
         outcome_of_seer={this.state.outcome_of_seer}
         choiceConfirmPhase={this.choiceConfirmPhase}
+        to_be_exiled={this.state.to_be_exiled}
       />
       </div>
       );
@@ -529,13 +543,13 @@ class WerewolfGame extends React.Component {
 
     let morning_exile = (
       <div>
+        <Timer
+          setTimerSeconds={this.setTimerSeconds}
+        />
         <ListToBeExiled
           players_with_roles={this.state.players_with_roles}
           exile={this.exile}
           choiceConfirmAtExilePhase={this.choiceConfirmAtExilePhase}
-        />
-        <Timer
-          setTimerSeconds={this.setTimerSeconds}
         />
       </div>);
 

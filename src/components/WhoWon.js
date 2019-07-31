@@ -10,7 +10,7 @@ const WhoWon = (props) => {
                         )
                     } else {
                         return (
-                            <p className='widget__message' key={player.name +'lose'}>負け。{player.name} : {player.role_jp}</p>
+                            <p className='widget__message' key={player.name +'lose'}>負け。{player.name} ({player.role_jp})</p>
                             )
                 }
                 })}

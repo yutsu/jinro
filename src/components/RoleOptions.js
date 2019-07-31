@@ -49,6 +49,12 @@ const RoleOptions = (props) => {
       updateNumberOfRoles={props.updateNumberOfRoles}
       />
 
+      <Counter
+      role='psychic'
+      role_jp='霊媒師'
+      updateNumberOfRoles={props.updateNumberOfRoles}
+      />
+
       <button className='big-button' onClick={props.determineRoles}>
         開始する!
       </button>

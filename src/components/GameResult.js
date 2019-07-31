@@ -28,12 +28,15 @@ const GameResult = (props) => {
           <div className='widget'>
             <h1 className='widget widget__important-message'>村人の勝利!</h1>
             {who_won}
+
             <button
-              className='button'
+              className='button-list'
               onClick={props.restart}
             >
             もう1ゲームする
             </button>
+
+
           </div>
       )
   }
