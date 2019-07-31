@@ -43,6 +43,12 @@ const RoleOptions = (props) => {
       updateNumberOfRoles={props.updateNumberOfRoles}
       />
 
+      <Counter
+      role='baker'
+      role_jp='パン屋さん'
+      updateNumberOfRoles={props.updateNumberOfRoles}
+      />
+
       <button className='big-button' onClick={props.determineRoles}>
         開始する!
       </button>

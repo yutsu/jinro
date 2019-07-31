@@ -12,7 +12,7 @@ const ShowListOfPlayers = (props) => {
               className='button-list'
               key={player.name}
 
-              onClick={() => props.choiceConfirmPhase([props.current_player_id, props.current_player.role, player, Object.keys(props.players_with_roles).length])}
+              onClick={() => props.choiceConfirmPhase([props.current_player_id, props.current_player, player, Object.keys(props.players_with_roles).length])}
             >
               <p>{player.name}さん</p>
               <span>を選ぶ｡</span>

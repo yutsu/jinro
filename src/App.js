@@ -16,7 +16,7 @@ import GameResult from './components/GameResult';
 import OutcomeOfSeer from './components/OutcomeOfSeer';
 import ShowRole from './components/ShowRole';
 import Timer from './components/Timer';
-import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever} from './components/Roles';
+import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker} from './components/Roles';
 
 
 
@@ -52,14 +52,15 @@ class WerewolfGame extends React.Component {
       players_with_roles: [],
       role_determined: false,
       phase: 'night_confirm',
-      possible_roles: ['villager', 'werewolf', 'seer', 'knight', 'traitor', 'werewolf_believer'],
+      possible_roles: ['villager', 'werewolf', 'seer', 'knight', 'traitor', 'werewolf_believer', 'baker'],
       n_each_role: {
         'villager':0,
         'werewolf':0,
         'seer':0,
         'knight':0,
         'traitor':0,
-        'werewolf_believer': 0
+        'werewolf_believer': 0,
+        'baker': 0
       },
       suspected_players: [],
       current_player_id: 0,
@@ -186,6 +187,13 @@ class WerewolfGame extends React.Component {
             players_with_roles: prevState.players_with_roles.concat(player)
           }));
         }
+        // パン屋さん
+        if (roles[i] === 'baker') {
+          let player = new Baker(this.state.players[i])
+          this.setState((prevState) => ({
+            players_with_roles: prevState.players_with_roles.concat(player)
+          }));
+        }
       }
 
     } else{
@@ -193,30 +201,28 @@ class WerewolfGame extends React.Component {
     }
   }
 
-  nightActionRecord(current_player_id, current_role, target_player, n_players) {
-    if (this.state.turn === 1 || current_role === 'villager' || current_role === 'werewolf_believer') {
+  nightActionRecord(current_player_id, player, target_player, n_players) {
+    if (this.state.turn === 1 || player.night_action === 'suspect') {
       this.setState((prevState) => ({
               suspected_players: prevState.suspected_players.concat(target_player.name)
             }));
-    } else if (current_role === 'werewolf') {
+    } else if (player.night_action === 'kill') {
       this.setState((prevState) => ({
               night_action_to_be_killed: [target_player]
             }));
 
-    } else if (current_role === 'seer') {
+    } else if (player.night_action === 'see') {
       this.setState({ outcome_of_seer: [target_player]})
-    } else if (current_role === 'knight') {
+    } else if (player.night_action === 'protect') {
       target_player.protected = true
     } else {
       console.log('unknown role');
-      console.log(current_player_id, current_role, target_player, n_players);
+      console.log(current_player_id, player, target_player, n_players);
     }
 
     this.setState({hide_options: true});
-
-
-    // this.nextPlayer(current_player_id, current_role, n_players)
 }
+
 
   nextPlayer(currentPlayerId, current_role, n_players) {
     this.setState({ outcome_of_seer: []})
