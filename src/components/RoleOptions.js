@@ -37,6 +37,12 @@ const RoleOptions = (props) => {
       updateNumberOfRoles={props.updateNumberOfRoles}
       />
 
+      <Counter
+      role='werewolf_believer'
+      role_jp='狼信者'
+      updateNumberOfRoles={props.updateNumberOfRoles}
+      />
+
       <button className='big-button' onClick={props.determineRoles}>
         開始する!
       </button>

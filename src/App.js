@@ -16,7 +16,7 @@ import GameResult from './components/GameResult';
 import OutcomeOfSeer from './components/OutcomeOfSeer';
 import ShowRole from './components/ShowRole';
 import Timer from './components/Timer';
-import {Villager, Werewolf, Seer, Knight, Traitor} from './components/Roles';
+import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever} from './components/Roles';
 
 
 
@@ -52,8 +52,15 @@ class WerewolfGame extends React.Component {
       players_with_roles: [],
       role_determined: false,
       phase: 'night_confirm',
-      possible_roles: ['villager', 'werewolf', 'seer', 'knight', 'traitor'],
-      n_each_role: {'villager':0, 'werewolf':0, 'seer':0, 'knight':0, 'traitor':0},
+      possible_roles: ['villager', 'werewolf', 'seer', 'knight', 'traitor', 'werewolf_believer'],
+      n_each_role: {
+        'villager':0,
+        'werewolf':0,
+        'seer':0,
+        'knight':0,
+        'traitor':0,
+        'werewolf_believer': 0
+      },
       suspected_players: [],
       current_player_id: 0,
       night_action_to_be_killed: [],
@@ -172,6 +179,13 @@ class WerewolfGame extends React.Component {
             players_with_roles: prevState.players_with_roles.concat(player)
           }));
         }
+        // 狼信者
+        if (roles[i] === 'werewolf_believer') {
+          let player = new WerewolfBeliever(this.state.players[i])
+          this.setState((prevState) => ({
+            players_with_roles: prevState.players_with_roles.concat(player)
+          }));
+        }
       }
 
     } else{
@@ -180,7 +194,7 @@ class WerewolfGame extends React.Component {
   }
 
   nightActionRecord(current_player_id, current_role, target_player, n_players) {
-    if (current_role === 'villager' || this.state.turn === 1) {
+    if (this.state.turn === 1 || current_role === 'villager' || current_role === 'werewolf_believer') {
       this.setState((prevState) => ({
               suspected_players: prevState.suspected_players.concat(target_player.name)
             }));

@@ -24,7 +24,7 @@ const ListToBeExiled = (props) => {
               </button>
               )
             } else {
-              return (<div key='ListToBeExiled-else'></div>)
+              return (<div key={player.name + 'ListToBeExiled'}></div>)
             }
         })}
       </div>

@@ -5,15 +5,25 @@ import DisplayWerewolves from './DisplayWerewolves';
 const ShowRole = (props) => {
   let player = props.players_with_roles[props.current_player_id];
   let name = player.name;
-  let turn_1_sentence = '一番人狼だと思う人を選んでください。 (最初の夜はどの役の人も疑うことのみをします。)'
+  let turn_1_sentence = (
+    <div>
+      <p>一番人狼だと思う人を選んでください。</p>
+      <p>(最初の夜はどの役の人も疑うことのみをします。)</p>
+    </div>
+    )
 
   if (player.alive){
     return(
       <div>
         <div className='widget widget__message'>
           <p className='msize'>{name}さんは<span className='widget__important-message bd lsize'>{player.role_jp}</span>です｡</p>
-          <p>{props.turn === 1? turn_1_sentence: player.action_sentence}</p>
+          {props.turn === 1? turn_1_sentence: player.action_sentence}
         </div>
+
+        <DisplayWerewolves
+          current_player={player}
+          players_with_roles={props.players_with_roles}
+        />
 
         <ShowListOfPlayers
           current_player={player}
@@ -24,10 +34,7 @@ const ShowRole = (props) => {
           choiceConfirmPhase={props.choiceConfirmPhase}
         />
 
-        <DisplayWerewolves
-          current_player={player}
-          players_with_roles={props.players_with_roles}
-        />
+
       </div>
       );
   } else {

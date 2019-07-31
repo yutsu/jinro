@@ -58,4 +58,13 @@ class Traitor extends Villager{
   }
 }
 
-export {Villager, Werewolf, Seer, Knight, Traitor};
+class WerewolfBeliever extends Villager{
+  constructor(name){
+    super(name);
+    this.role = 'werewolf_believer';
+    this.role_jp = '狼信者';
+    this.winning_side = 1
+  }
+}
+
+export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever};
