@@ -30,9 +30,6 @@ export default class RoleOptions extends React.Component {
             )
           })}
         </div>
-        <button className='big-button' onClick={this.props.determineRoles}>
-         開始する!
-       </button>
       </div>
       )
   }

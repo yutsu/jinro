@@ -5,25 +5,32 @@ export default class Counter extends React.Component {
   constructor(props) {
     super(props);
     this.handleAddOne = this.handleAddOne.bind(this);
+    this.handleLocalMemory = this.handleLocalMemory.bind(this);
     this.handleMinusOne = this.handleMinusOne.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.state = {
       count: 0
     };
   }
-  // componentDidMount() {
-  //   const stringCount = localStorage.getItem(this.props.role + '-counter');
-  //   const count = parseInt(stringCount, 10);
+  componentDidMount() {
+    const stringCount = localStorage.getItem(this.props.role + '-counter');
+    const count = parseInt(stringCount, 10);
 
-  //   if (!isNaN(count)) {
-  //     this.setState(() => ({ count }));
-  //   }
-  // }
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.count !== this.state.count) {
-  //     localStorage.setItem(this.props.role + '-counter', this.state.count);
-  //   }
-  // }
+    if (!isNaN(count)) {
+      this.setState(() => ({ count }));
+      this.handleLocalMemory(count)
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.count !== this.state.count) {
+      localStorage.setItem(this.props.role + '-counter', this.state.count);
+    }
+  }
+
+  handleLocalMemory (count) {
+    this.props.updateNumberOfRoles(count, this.props.role)
+  }
+
   handleAddOne() {
     this.props.updateNumberOfRoles(1, this.props.role)
     this.setState((prevState) => {

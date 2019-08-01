@@ -3,6 +3,7 @@ import React from 'react';
 import './styles/App.scss';
 
 import AddOption from './components/AddOption';
+import CheckNumberOfPlayersAndRoles from './components/CheckNumberOfPlayersAndRoles';
 import ConfirmIdentity from './components/ConfirmIdentity';
 import ConfirmChoice from './components/ConfirmChoice';
 import ConfirmChoiceAtExile from './components/ConfirmChoiceAtExile';
@@ -141,7 +142,7 @@ class WerewolfGame extends React.Component {
   }
   handleAddOption(option) {
     if (!option) {
-      return 'Enter valid value to add item';
+      return '名前を入力してください。';
     } else if (this.state.players.indexOf(option) > -1) {
       return 'この名前はすでに使われています｡';
     }
@@ -437,7 +438,7 @@ class WerewolfGame extends React.Component {
   }
 
   render() {
-    const subtitle = 'プレイヤーを登録してください';
+    const subtitle = '村人 vs 人狼';
     let register = (<div>
         <Header subtitle={subtitle} />
         <div className="container">
@@ -462,8 +463,13 @@ class WerewolfGame extends React.Component {
           <RoleOptions
             players_selected={this.state.players_selected}
             updateNumberOfRoles={this.updateNumberOfRoles}
-            determineRoles={this.determineRoles}
             roleClasses={this.prop.ROLE_classes}
+          />
+
+          <CheckNumberOfPlayersAndRoles
+            players={this.state.players}
+            n_each_role={this.state.n_each_role}
+            determineRoles={this.determineRoles}
           />
         </div>
 

@@ -8,12 +8,14 @@ const ResultOfMorning = (props) => {
   return(
     <div className='widget'>
       <p className='widget widget__message'>{x}さん, 最後に遺言をどうぞ｡</p>
-      <button
-        className='button'
-        onClick={ y < 0 ? props.nightConfirmPhase: props.gameResultPhase}
-      >
-        次へ
-      </button>
+      <div className="button-wrapper">
+        <button
+          className='button-single'
+          onClick={ y < 0 ? props.nightConfirmPhase: props.gameResultPhase}
+        >
+          次へ
+        </button>
+      </div>
     </div>
     )
 }

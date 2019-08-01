@@ -30,13 +30,14 @@ const ResultOfNight = (props) => {
         <p className='option option__text'>{!!suspected_players.length ?  'です｡': 'いませんでした｡' }</p>
       </div>
 
-
-      <button
-        className='button'
-        onClick={y < 0 ? props.morningPhase: props.gameResultPhase}
-      >
-        次へ
-      </button>
+      <div className="button-wrapper">
+        <button
+          className='button-single'
+          onClick={y < 0 ? props.morningPhase: props.gameResultPhase}
+        >
+          次へ
+        </button>
+      </div>
     </div>
     )
 

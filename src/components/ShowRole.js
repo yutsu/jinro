@@ -8,7 +8,7 @@ const ShowRole = (props) => {
   let name = player.name;
   let turn_1_sentence = (
     <div>
-      <p>一番人狼だと思う人を選んでください。</p>
+      <p className='add-option-action'>一番人狼だと思う人を選んでください。</p>
       <p>(最初の夜はどの役の人も疑うことのみをします。)</p>
     </div>
     )
@@ -18,7 +18,7 @@ const ShowRole = (props) => {
       <div>
         <div className='widget widget__message'>
           <div className='msize'>{name}さんは<div className='widget__important-message bd lsize'>{player.role_jp}</div>です｡</div>
-          {props.turn === 1? turn_1_sentence: player.action_sentence}
+          {props.turn === 1? turn_1_sentence: <p className='add-option-action'>{player.action_sentence}</p>}
         </div>
 
         {props.turn > 1 ? <PsychicPerceive
