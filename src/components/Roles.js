@@ -42,7 +42,7 @@ class Seer extends Villager{
     this.role_jp = '占い師';
     this.action_sentence = '今晩占う人を決めてください｡';
     this.night_action = 'see';
-    this.description = '村人側。 毎晩誰か一人を占い, その人が村人側か人狼側かを知ることができる。 ただし役職は知ることができない。'
+    this.description = '村人側。 毎晩誰か生きている一人を占い, その人が村人側か人狼側かを知ることができる。 ただし役職は知ることができない。'
   }
 }
 
@@ -63,7 +63,7 @@ class Traitor extends Villager{
     this.role = 'traitor';
     this.role_jp = '裏切り者';
     this.winning_side = 1;
-    this.description = '人狼側。 占いの結果には村人側と出る。夜には村人と同様に投票を行う。人狼は誰が裏切り者か知らない。';
+    this.description = '人狼側。 占いの結果には村人側と出る。夜には村人と同様に投票を行う。人狼は誰が裏切り者か知らず, 裏切り者も誰が人狼かわからない。';
   }
 }
 

@@ -1,65 +1,41 @@
 import React from 'react';
 import Counter from './Counter';
 
-const RoleOptions = (props) => {
-  if (props.players_selected){
-    return(<div></div>)
+
+
+export default class RoleOptions extends React.Component {
+  constructor(props) {
+    super(props);
   }
-  return (
-    <div className='widget'>
-      <Counter
-      role='villager'
-      role_jp='村人'
-      updateNumberOfRoles={props.updateNumberOfRoles}
-      />
 
-      <Counter
-      role='werewolf'
-      role_jp='人狼'
-      updateNumberOfRoles={props.updateNumberOfRoles}
-      />
+  classInstances(classes) {
+    return classes.map((RoleClass) => (
+      new RoleClass('anonymous')
+      ))
+  }
 
-      <Counter
-      role='seer'
-      role_jp='占い師'
-      updateNumberOfRoles={props.updateNumberOfRoles}
-      />
+  render() {
+    let instances = this.classInstances(this.props.roleClasses);
 
-      <Counter
-      role='knight'
-      role_jp='騎士'
-      updateNumberOfRoles={props.updateNumberOfRoles}
-      />
+    return(
+      <div>
+        <div className="widget">
+          {instances.map((role_class) => {
+            return (
+              <Counter
+                key={role_class.role}
+                role={role_class.role}
+                role_jp={role_class.role_jp}
+                updateNumberOfRoles={this.props.updateNumberOfRoles}
+                />
+            )
+          })}
+        </div>
+        <button className='big-button' onClick={this.props.determineRoles}>
+         開始する!
+       </button>
+      </div>
+      )
+  }
+}
 
-      <Counter
-      role='traitor'
-      role_jp='裏切り者'
-      updateNumberOfRoles={props.updateNumberOfRoles}
-      />
-
-      <Counter
-      role='werewolf_believer'
-      role_jp='狼信者'
-      updateNumberOfRoles={props.updateNumberOfRoles}
-      />
-
-      <Counter
-      role='baker'
-      role_jp='パン屋さん'
-      updateNumberOfRoles={props.updateNumberOfRoles}
-      />
-
-      <Counter
-      role='psychic'
-      role_jp='霊媒師'
-      updateNumberOfRoles={props.updateNumberOfRoles}
-      />
-
-      <button className='big-button' onClick={props.determineRoles}>
-        開始する!
-      </button>
-    </div>
-  );
-};
-
-export default RoleOptions;

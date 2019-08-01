@@ -24,6 +24,21 @@ const ListToBeExiled = (props) => {
             }
         })}
       </div>
+      <div className='button-wrapper-dead'>
+        {props.players_with_roles.map((player) => {
+          if (!player.alive){
+            return (
+              <button
+                disabled={true}
+                key={player.name}
+                className='button-list-dead'
+              >
+                <p>{player.name}さん</p>
+                <span>死亡</span>
+              </button>
+            )
+        }})}
+      </div>
     </div>
     )
 }

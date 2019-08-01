@@ -40,6 +40,25 @@
     margin: $m-size;
 }
 
+.button-list-dead {
+    background: darken($purple, 10%);
+    border: none;
+    border-bottom: .3rem solid darken($purple, 10%);
+    color: $off-white;
+    font-size: $s-size;
+    font-weight: 500;
+    padding: 0;
+    width: 100px;
+    height:auto;
+    margin: $m-size;
+}
+
+@media (min-width: $desktop-breakpoint) {
+    .button-list {
+        margin: $l-size;
+    }
+}
+
 .button--link {
     background: none;
     border: none;
@@ -55,12 +74,12 @@
     display: flex;
     flex-wrap: wrap;
     width: 400px;
-    height: 400px;
+    height: auto;
 }
 
 @media (min-width: $desktop-breakpoint) {
     .button-wrapper {
-        width: 650px;
-        height: 650px;
+        width: auto;
+        height: auto;
     }
 }

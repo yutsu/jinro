@@ -449,9 +449,10 @@ class WerewolfGame extends React.Component {
           />
 
           <RoleOptions
-          players_selected={this.state.players_selected}
-          updateNumberOfRoles={this.updateNumberOfRoles}
-          determineRoles={this.determineRoles}
+            players_selected={this.state.players_selected}
+            updateNumberOfRoles={this.updateNumberOfRoles}
+            determineRoles={this.determineRoles}
+            roleClasses={this.prop.ROLE_classes}
           />
         </div>
 
