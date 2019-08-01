@@ -35,9 +35,12 @@ export default class CheckNumberOfPlayersAndRoles extends React.Component {
                     { diff < 0 && <div className='widget__message'>
                         プレイヤーは全部で{this.numberOfPlayers()}人。 役職を後{this.numberOfRoles() - this.numberOfPlayers()}つ減らしてください。
                     </div>}
+                    { this.numberOfPlayers() === 0 && <div className='widget__message'>
+                        プレイヤーを登録してください。
+
+                    </div>}
                     { diff === 0 && <div className='widget__message'>
                         プレイヤーは全部で{this.numberOfPlayers()}人。 ゲームを開始できます。
-
                     </div>}
                 </div>
 
