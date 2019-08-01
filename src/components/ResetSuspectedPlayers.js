@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ResetSuspectedPlayers = (props) => {
-    props.resetSuspectedPlayers()
+    props.resetSuspectedPlayers
     return (<span></span>)
 }
 

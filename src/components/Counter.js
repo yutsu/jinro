@@ -12,7 +12,7 @@ export default class Counter extends React.Component {
     };
   }
   // componentDidMount() {
-  //   const stringCount = localStorage.getItem('counter');
+  //   const stringCount = localStorage.getItem(this.props.role + '-counter');
   //   const count = parseInt(stringCount, 10);
 
   //   if (!isNaN(count)) {
@@ -21,7 +21,7 @@ export default class Counter extends React.Component {
   // }
   // componentDidUpdate(prevProps, prevState) {
   //   if (prevState.count !== this.state.count) {
-  //     localStorage.setItem('counter', this.state.count);
+  //     localStorage.setItem(this.props.role + '-counter', this.state.count);
   //   }
   // }
   handleAddOne() {

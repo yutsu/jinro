@@ -17,7 +17,7 @@ const ShowRole = (props) => {
     return(
       <div>
         <div className='widget widget__message'>
-          <p className='msize'>{name}さんは<span className='widget__important-message bd lsize'>{player.role_jp}</span>です｡</p>
+          <div className='msize'>{name}さんは<div className='widget__important-message bd lsize'>{player.role_jp}</div>です｡</div>
           {props.turn === 1? turn_1_sentence: player.action_sentence}
         </div>
 

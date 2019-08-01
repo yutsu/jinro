@@ -13,6 +13,7 @@ import Options from './components/Options';
 import OutcomeOfSeer from './components/OutcomeOfSeer';
 import ResultOfMorning from './components/ResultOfMorning';
 import ResultOfNight from './components/ResultOfNight';
+import RoleDescription from './components/RoleDescription';
 import RoleOptions from './components/RoleOptions';
 import ShowRole from './components/ShowRole';
 import Timer from './components/Timer';
@@ -49,13 +50,35 @@ class WerewolfGame extends React.Component {
     this.resetSuspectedPlayers = this.resetSuspectedPlayers.bind(this);
     this.restart = this.restart.bind(this);
     this.setTimerSeconds = this.setTimerSeconds.bind(this);
+    this.prop = {
+       ROLES: {
+        'villager': Villager,
+        'werewolf': Werewolf,
+        'seer': Seer,
+        'knight': Knight,
+        'traitor': Traitor,
+        'werewolf_believer': WerewolfBeliever,
+        'baker': Baker,
+        'psychic': Psychic
+      },
+
+      ROLE_classes: [
+        Villager,
+        Werewolf,
+        Seer,
+        Knight,
+        Traitor,
+        WerewolfBeliever,
+        Baker,
+        Psychic
+      ]
+    }
     this.state = {
       players: [],
       players_selected: false,
       players_with_roles: [],
       role_determined: false,
       phase: 'night_confirm',
-      possible_roles: ['villager', 'werewolf', 'seer', 'knight', 'traitor', 'werewolf_believer', 'baker', 'psychic'],
       n_each_role: {
         'villager':0,
         'werewolf':0,
@@ -76,6 +99,8 @@ class WerewolfGame extends React.Component {
       turn: 1
     };
   }
+
+
   componentDidMount() {
     try {
       const json = localStorage.getItem('players');
@@ -148,64 +173,14 @@ class WerewolfGame extends React.Component {
         [roles[i], roles[j]] = [roles[j], roles[i]];
       }
 
+      // Assign roles to players
       for (let i=0; i < roles.length; i++) {
-        // 村人
-        if (roles[i] === 'villager') {
-          let player = new Villager(this.state.players[i])
-          this.setState((prevState) => ({
-            players_with_roles: prevState.players_with_roles.concat(player)
-          }));
+        let player = new this.prop.ROLES[roles[i]](this.state.players[i])
+        this.setState((prevState) => ({
+          players_with_roles: prevState.players_with_roles.concat(player)
+        }));
+
         }
-        // 人狼
-        if (roles[i] === 'werewolf') {
-          let player = new Werewolf(this.state.players[i])
-          this.setState((prevState) => ({
-            players_with_roles: prevState.players_with_roles.concat(player)
-          }));
-        }
-        // 占い師
-        if (roles[i] === 'seer') {
-          let player = new Seer(this.state.players[i])
-          this.setState((prevState) => ({
-            players_with_roles: prevState.players_with_roles.concat(player)
-          }));
-        }
-        // 騎士
-        if (roles[i] === 'knight') {
-          let player = new Knight(this.state.players[i]);
-          this.setState((prevState) => ({
-            players_with_roles: prevState.players_with_roles.concat(player)
-          }));
-        }
-        // 裏切り者
-        if (roles[i] === 'traitor') {
-          let player = new Traitor(this.state.players[i])
-          this.setState((prevState) => ({
-            players_with_roles: prevState.players_with_roles.concat(player)
-          }));
-        }
-        // 狼信者
-        if (roles[i] === 'werewolf_believer') {
-          let player = new WerewolfBeliever(this.state.players[i])
-          this.setState((prevState) => ({
-            players_with_roles: prevState.players_with_roles.concat(player)
-          }));
-        }
-        // パン屋さん
-        if (roles[i] === 'baker') {
-          let player = new Baker(this.state.players[i])
-          this.setState((prevState) => ({
-            players_with_roles: prevState.players_with_roles.concat(player)
-          }));
-        }
-        // 霊媒師
-        if (roles[i] === 'psychic') {
-          let player = new Psychic(this.state.players[i])
-          this.setState((prevState) => ({
-            players_with_roles: prevState.players_with_roles.concat(player)
-          }));
-        }
-      }
 
     } else{
       console.log('n_roles != n_players')
@@ -469,6 +444,9 @@ class WerewolfGame extends React.Component {
             />
           </div>
 
+          <RoleDescription
+            roleClasses={this.prop.ROLE_classes}
+          />
 
           <RoleOptions
           players_selected={this.state.players_selected}
