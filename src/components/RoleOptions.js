@@ -11,6 +11,8 @@ export default class RoleOptions extends React.Component {
       ))
   }
 
+
+
   render() {
     let instances = this.classInstances(this.props.roleClasses);
 

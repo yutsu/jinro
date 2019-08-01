@@ -54,12 +54,10 @@ export default class Counter extends React.Component {
   render() {
     return (
       <div>
-
-        <p className='option option__text option__role'>{this.props.role_jp}: {this.state.count}</p>
-        <div>
+        <div className='button-wrapper button-wrapper__role'>
+          <div className='option-role option__role'>{this.props.role_jp}: {this.state.count > 0 ? <div className='counter'>{this.state.count}</div>: this.state.count}</div>
           <button className='button button--plus-one' onClick={this.handleAddOne}>+1</button>
           <button className='button button--plus-one'  onClick={this.handleMinusOne}>-1</button>
-          <button className='button'  onClick={this.handleReset}>reset</button>
         </div>
       </div>
     );

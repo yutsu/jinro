@@ -5,7 +5,15 @@
     padding: $m-size $m-size;
 }
 
-
+.option-role {
+    color: white;
+    font-weight: 500;
+    font-size: 2rem;
+    display: flex;
+    justify-content: space-between;
+    padding: $m-size;
+    margin: $s-size;
+}
 
 .option__text {
     color: white;

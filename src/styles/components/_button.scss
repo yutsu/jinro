@@ -80,7 +80,7 @@
 }
 
 .button--plus-one {
-    margin-right: $s-size;
+    margin: auto;
 }
 
 .button-wrapper {
@@ -88,6 +88,12 @@
     flex-wrap: wrap;
     width: auto;
     height: auto;
+}
+
+.button-wrapper__role {
+    border-bottom: 1px solid lighten($light-blue, 10%);
+    height: auto;
+
 }
 
 .button-wrapper-next-player {
