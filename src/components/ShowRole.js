@@ -30,6 +30,7 @@ const ShowRole = (props) => {
         <DisplayWerewolves
           current_player={player}
           players_with_roles={props.players_with_roles}
+          night_action_to_be_killed={props.night_action_to_be_killed}
         />
 
         <ShowListOfPlayers
@@ -49,7 +50,7 @@ const ShowRole = (props) => {
       <div>
         <p className='widget widget__message'>{name}さんは死んでいます｡</p>
         <button
-          className='button'
+          className='button-single'
           onClick={() => (
           props.nextPlayer(props.current_player_id, player.role, Object.keys(props.players_with_roles).length))
           }

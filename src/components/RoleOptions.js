@@ -4,9 +4,6 @@ import Counter from './Counter';
 
 
 export default class RoleOptions extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   classInstances(classes) {
     return classes.map((RoleClass) => (

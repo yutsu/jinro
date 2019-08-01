@@ -37,6 +37,8 @@ const ListToBeExiled = (props) => {
                 <span>死亡</span>
               </button>
             )
+        } else {
+          return <div key={player.name}></div>
         }})}
       </div>
     </div>

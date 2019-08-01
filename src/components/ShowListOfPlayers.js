@@ -29,6 +29,7 @@ const ShowListOfPlayers = (props) => {
           if (!player.alive){
             return (
               <button
+                key={player.name}
                 disabled={true}
                 className='button-list-dead'
               >
@@ -36,6 +37,8 @@ const ShowListOfPlayers = (props) => {
                 <span>死亡</span>
               </button>
             )
+        } else {
+          return <div key={player.name}></div>
         }})}
       </div>
     </div>

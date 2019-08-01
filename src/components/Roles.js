@@ -12,8 +12,9 @@ class Villager extends Player{
     super(name);
     this.role = 'villager';
     this.role_jp = '村人';
-    this.side = 0;
-    this.winning_side = 0
+    this.side = 0; // 陣営
+    this.winning_side = 0;
+    this.saw = 0 // 占い結果
     this.killable = true;
     this.action_sentence = 'もっとも疑わしい人を一人選んでください｡';
     this.night_action = 'suspect'
@@ -28,6 +29,7 @@ class Werewolf extends Player{
     this.role_jp = '人狼';
     this.side = 1;
     this.winning_side = 1
+    this.saw = 1;
     this.killable = false;
     this.action_sentence = '今晩襲う人を決めてください｡';
     this.night_action = 'kill'
@@ -96,5 +98,15 @@ class Psychic extends Villager{
   }
 }
 
+class Haunted extends Villager{
+  constructor(name){
+    super(name);
+    this.role = 'haunted';
+    this.role_jp = '狼憑き';
+    this.saw = 1;
+    this.description = '村人側。 狼にとりつかれた村人。 占い結果に狼と出てしまう。 霊媒の結果は村人。 そして村人同様に投票を行う。';
+  }
+}
 
-export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic};
+
+export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted};

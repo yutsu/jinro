@@ -5,9 +5,9 @@ import React from 'react';
 const OutcomeOfSeer = (props) => {
     let current_player = props.players_with_roles[props.current_player_id];
     let next_player = (
-        <div className='button-wrapper'>
+        <div className='button-wrapper-next-player'>
             <button
-                className='button-list'
+                className='button-single'
                 key="ShowListOfPlayersNextPlayer"
                 onClick={(e) => {
                     props.nextPlayer(props.current_player_id, current_player.role,  Object.keys(props.players_with_roles).length)
@@ -23,7 +23,7 @@ const OutcomeOfSeer = (props) => {
         try{
             return (
                 <div className='widget wigget__message'>
-                    <div className='widget widget__message'>{props.outcome_of_seer[0].name}さんは{props.outcome_of_seer[0].side === 0? '村人':'人狼'}です｡
+                    <div className='widget widget__message'>{props.outcome_of_seer[0].name}さんは{props.outcome_of_seer[0].saw === 0? '村人':'人狼'}です｡
                     {next_player}</div>
                 </div>)
         }
