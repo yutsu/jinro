@@ -1,3 +1,8 @@
+// No touch action
+html {
+  touch-action:none;
+}
+
 html {
     font-size: 62.5%;
 }

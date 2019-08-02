@@ -164,4 +164,15 @@ class LoneWerewolf extends Werewolf {
   }
 }
 
-export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf};
+class Pizzeria extends Villager {
+  constructor(name) {
+    super(name);
+    this.role = 'pizzeria';
+    this.role_jp = 'ピザ屋さん';
+    this.night_action = 'deliver_pizza';
+    this.action_sentence = 'ピザをお届けする人を選んでください。';
+    this.description = '村人側。毎晩ピザを届ける人を選ぶ。ピザは次の日の夜に届く。届けた相手にはピザ屋だとバレる。'
+  }
+}
+
+export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria};

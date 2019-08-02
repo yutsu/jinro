@@ -11,6 +11,7 @@ export default class ResultOfMorning extends React.Component {
   }
 
   afterWillPhase () {
+    this.props.handlePizzaOrder();
     this.setState({ phase: 'after_will'})
   }
 

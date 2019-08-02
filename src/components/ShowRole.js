@@ -2,6 +2,7 @@ import React from 'react';
 import ShowListOfPlayers from './ShowListOfPlayers';
 import DisplayWerewolves from './DisplayWerewolves';
 import PsychicPerceive from './PsychicPerceive';
+import PizzaDelivery from './PizzaDelivery';
 
 const ShowRole = (props) => {
   let player = props.players_with_roles[props.current_player_id];
@@ -24,6 +25,12 @@ const ShowRole = (props) => {
         {props.turn > 1 ? <PsychicPerceive
           to_be_exiled={props.to_be_exiled}
           turn={props.turn}
+          current_player={player}
+        /> : <span></span>}
+
+        {props.turn > 1 ? <PizzaDelivery
+          pizza_order={props.pizza_order}
+          pizza_delivery={props.pizza_delivery}
           current_player={player}
         /> : <span></span>}
 

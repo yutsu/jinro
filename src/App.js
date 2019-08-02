@@ -18,7 +18,7 @@ import RoleDescription from './components/RoleDescription';
 import RoleOptions from './components/RoleOptions';
 import ShowRole from './components/ShowRole';
 import Timer from './components/Timer';
-import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf} from './components/Roles';
+import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria} from './components/Roles';
 
 
 
@@ -34,6 +34,7 @@ class WerewolfGame extends React.Component {
     this.determineRoles = this.determineRoles.bind(this);
     this.nightActionRecord = this.nightActionRecord.bind(this);
     this.handleKilledAtNight = this.handleKilledAtNight.bind(this);
+    this.handlePizzaOrder = this.handlePizzaOrder.bind(this);
     this.handleWinningSide = this.handleWinningSide.bind(this);
     this.mostSuspiciousPlayer = this.mostSuspiciousPlayer.bind(this);
     this.morningPhase = this.morningPhase.bind(this);
@@ -67,7 +68,8 @@ class WerewolfGame extends React.Component {
         'sage': Sage,
         'ninjya': Ninjya,
         'weak_werewolf': WeakWerewolf,
-        'lone_werewolf': LoneWerewolf
+        'lone_werewolf': LoneWerewolf,
+        'pizzeria': Pizzeria
       },
 
       ROLE_classes: [
@@ -84,7 +86,8 @@ class WerewolfGame extends React.Component {
         Sage,
         Ninjya,
         WeakWerewolf,
-        LoneWerewolf
+        LoneWerewolf,
+        Pizzeria
       ]
     }
     this.state = {
@@ -107,13 +110,16 @@ class WerewolfGame extends React.Component {
         'sage': 0,
         'ninjya': 0,
         'weak_werewolf': 0,
-        'lone_werewolf': 0
+        'lone_werewolf': 0,
+        'pizzeria': 0
       },
       suspected_players: [],
       current_player_id: 0,
       night_action_to_be_killed: [],
       to_be_exiled: [],
       outcome_of_seer: [],
+      pizza_order: [],
+      pizza_delivery: [],
       to_be_confirmed: [],
       hide_options: false,
       turn: 1
@@ -225,11 +231,14 @@ class WerewolfGame extends React.Component {
                 night_action_to_be_killed: [target_player]
               }));
       }
-
     } else if (['see', 'see_role'].includes(player.night_action)) {
       this.setState({ outcome_of_seer: [target_player]})
     } else if (player.night_action === 'protect') {
       target_player.protected = true
+    } else if (player.night_action === 'deliver_pizza') {
+      this.setState((prevState) => ({
+          pizza_order: [...this.state.pizza_order, ...[[player, target_player]]]})
+        )
     } else if (player.night_action === 'hide') {
       // just hiding
     } else {
@@ -333,6 +342,14 @@ class WerewolfGame extends React.Component {
     .filter((player) => (player.role !== 'ninjya'))
     .forEach((player) => {player.protected = false})
   }
+
+  handlePizzaOrder () {
+    this.setState((prevState) => ({
+      pizza_delivery: prevState.pizza_order
+      }));
+    this.setState({pizza_order: []});
+    }
+
 
   setTimerSeconds() {
     let n_alive_players = this.numberOfAliveVillagers() + this.numberOfAliveWerewolves;
@@ -548,6 +565,8 @@ class WerewolfGame extends React.Component {
         choiceConfirmPhase={this.choiceConfirmPhase}
         to_be_exiled={this.state.to_be_exiled}
         night_action_to_be_killed={this.state.night_action_to_be_killed}
+        pizza_order={this.state.pizza_order}
+        pizza_delivery={this.state.pizza_delivery}
       />
       </div>
       );
@@ -566,6 +585,7 @@ class WerewolfGame extends React.Component {
           turn={this.state.turn}
           gameResultPhase={this.gameResultPhase}
           isBakerAlive={this.isBakerAlive}
+          handlePizzaOrder={this.handlePizzaOrder}
         />
       </div>);
 
@@ -589,6 +609,7 @@ class WerewolfGame extends React.Component {
           nightConfirmPhase={this.nightConfirmPhase}
           players_with_roles={this.state.players_with_roles}
           gameResultPhase={this.gameResultPhase}
+          handlePizzaOrder={this.handlePizzaOrder}
         />
       </div>);
 
