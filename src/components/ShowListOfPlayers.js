@@ -7,7 +7,7 @@ const ShowListOfPlayers = (props) => {
     <div>
         <div className='button-wrapper'>
           {props.players_with_roles.map((player) => {
-            if (player !== props.current_player && player.alive && !(props.current_player.role === 'werewolf' && !player.killable)){
+            if (player !== props.current_player && player.alive && !(['werewolf', 'werewolf_god', 'weak_werewolf'].includes(props.current_player.role)  && !player.killable)){
               return (
                 <button
                   className='button-list'

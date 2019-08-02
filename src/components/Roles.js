@@ -16,7 +16,7 @@ class Villager extends Player{
     this.winning_side = 0;
     this.saw = 0 // 占い結果
     this.perceived = '村人' // 霊能結果
-    this.killable = true;
+    this.killable = true; // 人狼に殺される可能性
     this.action_sentence = 'もっとも疑わしい人を一人選んでください｡';
     this.night_action = 'suspect'
     this.description = '人に化けた狼が暮らす村に住む。夜には人狼だと疑う人にこっそり投票する。'
@@ -149,9 +149,19 @@ class WeakWerewolf extends Werewolf {
     super(name);
     this.role = 'weak_werewolf';
     this.role_jp = '弱人狼';
-    this.night_action = 'weak-kill'
+    this.night_action = 'weak_kill'
     this.description = '人狼側。 夜の襲撃に50%の確率で失敗する以外は通常の人狼'
   }
 }
 
-export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf};
+class LoneWerewolf extends Werewolf {
+  constructor(name){
+    super(name);
+    this.role = 'lone_werewolf';
+    this.role_jp = '一匹狼';
+    this.killable = true;
+    this.description = '人狼側。 他の人狼や狼信者にも正体を知られていない人狼。また他の人狼が誰なのかわからない。仲間の人狼を殺す可能性と殺される可能性がある。'
+  }
+}
+
+export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf};

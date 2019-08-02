@@ -18,7 +18,7 @@ import RoleDescription from './components/RoleDescription';
 import RoleOptions from './components/RoleOptions';
 import ShowRole from './components/ShowRole';
 import Timer from './components/Timer';
-import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf} from './components/Roles';
+import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf} from './components/Roles';
 
 
 
@@ -66,7 +66,8 @@ class WerewolfGame extends React.Component {
         'werewolf_god': WerewolfGod,
         'sage': Sage,
         'ninjya': Ninjya,
-        'weak_werewolf': WeakWerewolf
+        'weak_werewolf': WeakWerewolf,
+        'lone_werewolf': LoneWerewolf
       },
 
       ROLE_classes: [
@@ -82,7 +83,8 @@ class WerewolfGame extends React.Component {
         WerewolfGod,
         Sage,
         Ninjya,
-        WeakWerewolf
+        WeakWerewolf,
+        LoneWerewolf
       ]
     }
     this.state = {
@@ -104,7 +106,8 @@ class WerewolfGame extends React.Component {
         'werewolf_god': 0,
         'sage': 0,
         'ninjya': 0,
-        'weak_werewolf': 0
+        'weak_werewolf': 0,
+        'lone_werewolf': 0
       },
       suspected_players: [],
       current_player_id: 0,
@@ -215,9 +218,8 @@ class WerewolfGame extends React.Component {
       this.setState((prevState) => ({
               night_action_to_be_killed: [target_player]
             }));
-    } else if (player.night_action === 'weak-kill') {
+    } else if (player.night_action === 'weak_kill') {
       let prob = Math.random();
-      console.log(prob);
       if (prob > 0.5) {
         this.setState((prevState) => ({
                 night_action_to_be_killed: [target_player]
@@ -327,10 +329,9 @@ class WerewolfGame extends React.Component {
   }
 
   removeProtection () {
-    this.state.players_with_roles.map((player) => {
-      if (player.role !== 'ninjya') {
-        player.protected = false
-      }});
+    this.state.players_with_roles
+    .filter((player) => (player.role !== 'ninjya'))
+    .forEach((player) => {player.protected = false})
   }
 
   setTimerSeconds() {
