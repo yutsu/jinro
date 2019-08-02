@@ -33,7 +33,7 @@ const ShowRole = (props) => {
           night_action_to_be_killed={props.night_action_to_be_killed}
         />
 
-        {player.night_action !== 'hide' ? <ShowListOfPlayers
+        {(props.turn === 1 || player.night_action !== 'hide') ? <ShowListOfPlayers
           current_player={player}
           current_player_id={props.current_player_id}
           players_with_roles={props.players_with_roles}
