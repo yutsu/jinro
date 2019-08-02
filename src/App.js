@@ -18,7 +18,7 @@ import RoleDescription from './components/RoleDescription';
 import RoleOptions from './components/RoleOptions';
 import ShowRole from './components/ShowRole';
 import Timer from './components/Timer';
-import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya} from './components/Roles';
+import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf} from './components/Roles';
 
 
 
@@ -65,7 +65,8 @@ class WerewolfGame extends React.Component {
         'haunted': Haunted,
         'werewolf_god': WerewolfGod,
         'sage': Sage,
-        'ninjya': Ninjya
+        'ninjya': Ninjya,
+        'weak_werewolf': WeakWerewolf
       },
 
       ROLE_classes: [
@@ -80,7 +81,8 @@ class WerewolfGame extends React.Component {
         Haunted,
         WerewolfGod,
         Sage,
-        Ninjya
+        Ninjya,
+        WeakWerewolf
       ]
     }
     this.state = {
@@ -101,7 +103,8 @@ class WerewolfGame extends React.Component {
         'haunted': 0,
         'werewolf_god': 0,
         'sage': 0,
-        'ninjya': 0
+        'ninjya': 0,
+        'weak_werewolf': 0
       },
       suspected_players: [],
       current_player_id: 0,
@@ -212,6 +215,14 @@ class WerewolfGame extends React.Component {
       this.setState((prevState) => ({
               night_action_to_be_killed: [target_player]
             }));
+    } else if (player.night_action === 'weak-kill') {
+      let prob = Math.random();
+      console.log(prob);
+      if (prob > 0.5) {
+        this.setState((prevState) => ({
+                night_action_to_be_killed: [target_player]
+              }));
+      }
 
     } else if (['see', 'see_role'].includes(player.night_action)) {
       this.setState({ outcome_of_seer: [target_player]})

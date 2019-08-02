@@ -5,7 +5,7 @@ const DisplayWerewolves = (props) => {
         return (
             <div className='widget'>
                 {props.players_with_roles.map((player) => {
-                  if (player !== props.current_player && ['werewolf', 'werewolf_god'].includes(player.role)){
+                  if (player !== props.current_player && ['werewolf', 'werewolf_god', 'weak_werewolf'].includes(player.role)){
                     return (
                         <div>
                             <p className='widget widget__important-message' key={player.name}>{player.name}さんも人狼です｡</p>
@@ -23,7 +23,7 @@ const DisplayWerewolves = (props) => {
         return (
             <div className='widget'>
                 {props.players_with_roles.map((player) => {
-                  if (player !== props.current_player && ['werewolf', 'werewolf_god'].includes(player.role)){
+                  if (player !== props.current_player && ['werewolf', 'werewolf_god', 'weak_werewolf'].includes(player.role)){
                     return (
                         <p className='widget widget__important-message' key={player.name}>{player.name}さんは人狼です｡</p>
                     )

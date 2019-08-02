@@ -144,5 +144,14 @@ class Ninjya extends Villager {
   }
 }
 
+class WeakWerewolf extends Werewolf {
+  constructor(name){
+    super(name);
+    this.role = 'weak_werewolf';
+    this.role_jp = '弱人狼';
+    this.night_action = 'weak-kill'
+    this.description = '人狼側。 夜の襲撃に50%の確率で失敗する以外は通常の人狼'
+  }
+}
 
-export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya};
+export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf};
