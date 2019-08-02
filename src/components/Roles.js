@@ -15,6 +15,7 @@ class Villager extends Player{
     this.side = 0; // 陣営
     this.winning_side = 0;
     this.saw = 0 // 占い結果
+    this.perceived = '村人' // 霊能結果
     this.killable = true;
     this.action_sentence = 'もっとも疑わしい人を一人選んでください｡';
     this.night_action = 'suspect'
@@ -30,6 +31,7 @@ class Werewolf extends Player{
     this.side = 1;
     this.winning_side = 1
     this.saw = 1;
+    this.perceived = '人狼'
     this.killable = false;
     this.action_sentence = '今晩襲う人を決めてください｡';
     this.night_action = 'kill'
@@ -65,7 +67,7 @@ class Traitor extends Villager{
     this.role = 'traitor';
     this.role_jp = '裏切り者';
     this.winning_side = 1;
-    this.description = '人狼側。 占いの結果には村人側と出る。夜には村人と同様に投票を行う。人狼は誰が裏切り者か知らず, 裏切り者も誰が人狼かわからない。';
+    this.description = '人狼側。 しかし占いの結果と霊媒結果には村人側と出る。夜には村人と同様に投票を行う。人狼は誰が裏切り者か知らず, 裏切り者も誰が人狼かわからない。';
   }
 }
 
@@ -75,7 +77,7 @@ class WerewolfBeliever extends Villager{
     this.role = 'werewolf_believer';
     this.role_jp = '狼信者';
     this.winning_side = 1;
-    this.description = '人狼側。しかし占いの結果には村人側と出る。夜には村人と同様に投票を行う。 狼信者は誰が人狼か知っている。 ただし人狼は誰が狼信者なのかわからない。';
+    this.description = '人狼側。しかし占いの結果と霊媒結果には村人側と出る。夜には村人と同様に投票を行う。 狼信者は誰が人狼か知っている。 ただし人狼は誰が狼信者なのかわからない。';
   }
 }
 
@@ -94,7 +96,7 @@ class Psychic extends Villager{
     this.role = 'psychic';
     this.role_jp = '霊媒師';
     this.night_action = 'perceive';
-    this.description = '村人側。 毎晩その日の朝に処刑された人が村人側か人狼側か知ることができる。ただし役職はわからない。そして村人同様に投票を行う。';
+    this.description = '村人側。 毎晩その日の朝に処刑された人が村人か人狼か知ることができる。ただし役職はわからない。そして村人同様に投票を行う。';
   }
 }
 
@@ -104,9 +106,43 @@ class Haunted extends Villager{
     this.role = 'haunted';
     this.role_jp = '狼憑き';
     this.saw = 1;
-    this.description = '村人側。 狼にとりつかれた村人。 占い結果に狼と出てしまう。 霊媒の結果は村人。 そして村人同様に投票を行う。';
+    this.perceived = '人狼'
+    this.description = '村人側。 狼にとりつかれた村人。 占い結果と霊媒結果に人狼と出てしまう。 そして村人同様に投票を行う。';
+  }
+}
+
+class WerewolfGod extends Werewolf {
+  constructor(name){
+    super(name);
+    this.role = 'werewolf_god';
+    this.role_jp = '神狼';
+    this.saw = 0;
+    this.perceived = '神狼';
+    this.description = '人狼側。 ただし占い結果に村人と出る。 霊媒結果は神狼となる。夜には通常の人狼同様に殺害する人を一人選ぶ。人狼と狼信者には人狼として知られている。'
+  }
+}
+
+class Sage extends Seer {
+  constructor(name) {
+    super(name);
+    this.role = 'sage';
+    this.role_jp = '賢者';
+    this.night_action ='see_role';
+    this.description = '村人側。毎晩役職まで知ることができる占いを行う。'
+  }
+}
+
+class Ninjya extends Villager {
+  constructor(name) {
+    super(name);
+    this.role = 'ninjya';
+    this.role_jp = '忍者';
+    this.night_action = 'hide';
+    this.protected = true;
+    this.action_sentence = '隠れ身の術!!';
+    this.description = '村人側。 隠れ身の術で狼の襲撃から逃れることができる。その代わり夜の投票に参加できない。'
   }
 }
 
 
-export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted};
+export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya};

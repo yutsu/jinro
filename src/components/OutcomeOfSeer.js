@@ -19,7 +19,7 @@ const OutcomeOfSeer = (props) => {
 
         )
 
-    if (current_player.role === 'seer' && props.hide_options && props.turn > 1){
+    if (current_player.night_action === 'see' && props.hide_options && props.turn > 1){
         try{
             return (
                 <div className='widget wigget__message'>
@@ -33,7 +33,20 @@ const OutcomeOfSeer = (props) => {
                 <div>
                 </div>)
         }
+    } else if (current_player.night_action === 'see_role' && props.hide_options && props.turn > 1){
+        try{
+            return (
+                <div className='widget wigget__message'>
+                    <div className='widget widget__message'>{props.outcome_of_seer[0].name}さんは{props.outcome_of_seer[0].role_jp}です｡
+                    {next_player}</div>
+                </div>)
+        }
 
+        catch(err){
+            return (
+                <div>
+                </div>)
+        }
     } else if (props.hide_options){
         return (
             <div>

@@ -8,7 +8,7 @@ const ShowRole = (props) => {
   let name = player.name;
   let turn_1_sentence = (
     <div>
-      <p className='add-option-action'>一番人狼だと思う人を選んでください。</p>
+      <p className='add-option-action'>人狼だと思う人を選んでください。</p>
       <p>(最初の夜はどの役の人も疑うことのみをします。)</p>
     </div>
     )
@@ -33,14 +33,24 @@ const ShowRole = (props) => {
           night_action_to_be_killed={props.night_action_to_be_killed}
         />
 
-        <ShowListOfPlayers
+        {player.night_action !== 'hide' ? <ShowListOfPlayers
           current_player={player}
           current_player_id={props.current_player_id}
           players_with_roles={props.players_with_roles}
           nightActionRecord={props.nightActionRecord}
           nextPlayer={props.nextPlayer}
           choiceConfirmPhase={props.choiceConfirmPhase}
-        />
+        />:
+        <div className='button-wrapper'>
+          <button
+            className='button-single'
+            onClick={() => (
+            props.nextPlayer(props.current_player_id, player.role, Object.keys(props.players_with_roles).length))
+            }
+          >
+          次のプレーヤーへ
+          </button>
+        </div>}
 
 
       </div>
@@ -49,14 +59,16 @@ const ShowRole = (props) => {
     return (
       <div>
         <p className='widget widget__message'>{name}さんは死んでいます｡</p>
-        <button
-          className='button-single'
-          onClick={() => (
-          props.nextPlayer(props.current_player_id, player.role, Object.keys(props.players_with_roles).length))
-          }
-        >
-        次のプレーヤーへ
-      </button>
+        <div className="button-wrapper">
+          <button
+            className='button-single'
+            onClick={() => (
+            props.nextPlayer(props.current_player_id, player.role, Object.keys(props.players_with_roles).length))
+            }
+          >
+          次のプレーヤーへ
+          </button>
+        </div>
       </div>)
   }
 

@@ -5,10 +5,10 @@ const DisplayWerewolves = (props) => {
         return (
             <div className='widget'>
                 {props.players_with_roles.map((player) => {
-                  if (player !== props.current_player && player.role === 'werewolf'){
+                  if (player !== props.current_player && ['werewolf', 'werewolf_god'].includes(player.role)){
                     return (
                         <div>
-                            <p className='widget widget__important-message' key={player.name}>{player.name}さんも{player.role_jp}です｡</p>
+                            <p className='widget widget__important-message' key={player.name}>{player.name}さんも人狼です｡</p>
                             {props.night_action_to_be_killed.length === 0 ? <div></div>: <div className='widget__message'>{props.night_action_to_be_killed[0].name}さんを襲撃する予定です。違う人を襲うことも可能です。</div>}
                         </div>
 
@@ -23,9 +23,9 @@ const DisplayWerewolves = (props) => {
         return (
             <div className='widget'>
                 {props.players_with_roles.map((player) => {
-                  if (player !== props.current_player && player.role === 'werewolf'){
+                  if (player !== props.current_player && ['werewolf', 'werewolf_god'].includes(player.role)){
                     return (
-                        <p className='widget widget__important-message' key={player.name}>{player.name}さんは{player.role_jp}です｡</p>
+                        <p className='widget widget__important-message' key={player.name}>{player.name}さんは人狼です｡</p>
                     )
                   } else {
                     return (
