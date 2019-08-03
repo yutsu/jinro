@@ -24,7 +24,8 @@ export default class ResultOfMorning extends React.Component {
     if (this.state.phase === 'will') {
       return (
         <div className='widget'>
-          <p className='widget widget__message'>{this.props.to_be_exiled[0]}さん, 最後に遺言をどうぞ｡</p>
+        {this.props.to_be_exiled.length !== 0 &&
+          <p className='widget widget__message'>{this.props.to_be_exiled[0]}さん, 最後に遺言をどうぞ｡</p>}
           <div className="button-wrapper">
             <button
               className='button-single'
@@ -40,7 +41,10 @@ export default class ResultOfMorning extends React.Component {
       return (
         <div>
           <div className="widget">
-            <div className='widget__message'>人狼だと疑われた{this.props.to_be_exiled[0]}さんは追放されました。</div>
+            {this.props.to_be_exiled.length !== 0 ?
+              <div className='widget__message'>人狼だと疑われた{this.props.to_be_exiled[0]}さんは追放されました。</div>
+              : <div className='widget__message'>今朝は誰も追放されませんでした。</div>
+            }
           </div>
 
           <div className="button-wrapper">

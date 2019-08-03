@@ -40,6 +40,18 @@
     margin: $m-size;
 }
 
+.button-no-exile {
+    background: $red;
+    border: none;
+    border-bottom: .3rem solid darken($red, 10%);
+    color: white;
+    font-weight: 500;
+    padding: $s-size;
+    width:150px;
+    height:100px;
+    margin: $m-size;
+}
+
 .button-single {
     background: $purple;
     border: none;

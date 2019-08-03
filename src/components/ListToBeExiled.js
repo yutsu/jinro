@@ -41,6 +41,30 @@ const ListToBeExiled = (props) => {
           return <div key={player.name}></div>
         }})}
       </div>
+      <div className="button-wrapper">
+        <button
+          className='button-no-exile'
+          key={'no_exile'}
+          onClick={(e) => {
+            props.choiceConfirmAtExilePhase()
+            }
+          }
+        >
+          誰も追放しない。
+        </button>
+      </div>
+      <div className="button-wrapper">
+        <button
+          className='button-no-exile'
+          key={'no_exile'}
+          onClick={(e) => {
+            props.choiceConfirmAtExilePhase('random')
+            }
+          }
+        >
+          ランダムに選ぶ。
+        </button>
+      </div>
     </div>
     )
 }

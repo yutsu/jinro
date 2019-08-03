@@ -321,8 +321,12 @@ class WerewolfGame extends React.Component {
     return result
   }
   exile(player) {
-    player.alive = false;
-    this.exile2(player.name, player.perceived); // Can't do exile2(player)
+    if (player !== undefined){
+      player.alive = false;
+      this.exile2(player.name, player.perceived); // Can't do exile2(player)
+    } else {
+      this.setState({ to_be_exiled: []})
+    }
     this.morningActionCompletedPhase();
     this.resetSuspectedPlayers();
     this.resetToBeKilledPlayer();
@@ -383,6 +387,8 @@ class WerewolfGame extends React.Component {
     this.setState(() => ({ night_action_to_be_killed: [] }));
     this.setState(() => ({ to_be_exiled: []}));
     this.setState(() => ({ outcome_of_seer: []}));
+    this.setState(() => ({ pizza_order: []}));
+    this.setState(() => ({ pizza_delivery: []}));
     this.setState(() => ({ turn: 1}));
   }
 
@@ -548,6 +554,7 @@ class WerewolfGame extends React.Component {
     let choice_confirm_at_exile = (
       <div>
         <ConfirmChoiceAtExile
+          players_with_roles={this.state.players_with_roles}
           to_be_confirmed={this.state.to_be_confirmed}
           morningPhase={this.morningPhase}
           exile={this.exile}

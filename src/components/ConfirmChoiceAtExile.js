@@ -2,14 +2,34 @@ import React from 'react';
 
 const ConfirmChoiceAtExile = (props) => {
 
+    let players = props.players_with_roles.filter((player) => (player.alive));
+    let random_player = players[Math.floor(Math.random()*players.length)];
+
+    let confirm_message = (
+        <div>
+            {props.to_be_confirmed === 'random'?
+                <div>ランダムに選んでいいですか?</div>:
+                <div>{props.to_be_confirmed === undefined ? <div>追放をスキップしますか?</div> :<div>{props.to_be_confirmed.name}さんでいいですか?</div>}
+                </div>
+            }
+        </div>
+        )
+
+    let victim = 'victim';
+    if (props.to_be_confirmed === 'random') {
+        victim = random_player;
+    } else {
+        victim = props.to_be_confirmed;
+    }
+
     if (!props.hide_options) {
         return (
             <div className='widget widget__confirm'>
-                <p className='widget widget__confirm-message'>{props.to_be_confirmed.name}さんでいいですか?</p>
+                <p className='widget widget__confirm-message'>{confirm_message}</p>
                 <div className='button-wrapper'>
                     <button
                         className='button-list'
-                        onClick={(e) => props.exile(props.to_be_confirmed)}
+                        onClick={(e) => props.exile(victim)}
                     >
                     OKです｡
                     </button>
