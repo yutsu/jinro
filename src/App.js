@@ -355,13 +355,13 @@ class WerewolfGame extends React.Component {
     let n_alive_players = this.numberOfAliveVillagers() + this.numberOfAliveWerewolves;
 
     if (n_alive_players < 4) {
-      return 120
-    } else if (n_alive_players === 4) {
       return 180
-    } else if (n_alive_players === 5) {
+    } else if (n_alive_players === 4) {
       return 240
-    } else {
+    } else if (n_alive_players === 5) {
       return 300
+    } else {
+      return 360
     }
   }
 
