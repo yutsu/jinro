@@ -175,4 +175,14 @@ class Pizzeria extends Villager {
   }
 }
 
-export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria};
+class WerewolfLinguist extends Villager{
+  constructor(name){
+    super(name);
+    this.role = 'werewolf_linguist';
+    this.role_jp = '狼言語学者';
+    this.winning_side = 1;
+    this.description = '人狼側。 しかし占いの結果と霊媒結果には村人側と出る。夜には村人と同様に投票を行う。人狼は誰が裏切り者か知らず, 裏切り者も誰が人狼かわからない。狼の言語がわかり狼に襲撃されると, 命を助ける代わりに狼にされる。変身後は狼と同様。騎士に守られた場合には変身しない。';
+  }
+}
+
+export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, WerewolfLinguist};

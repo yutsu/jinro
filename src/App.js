@@ -18,7 +18,7 @@ import RoleDescription from './components/RoleDescription';
 import RoleOptions from './components/RoleOptions';
 import ShowRole from './components/ShowRole';
 import Timer from './components/Timer';
-import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria} from './components/Roles';
+import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, WerewolfLinguist} from './components/Roles';
 
 
 
@@ -69,7 +69,8 @@ class WerewolfGame extends React.Component {
         'ninjya': Ninjya,
         'weak_werewolf': WeakWerewolf,
         'lone_werewolf': LoneWerewolf,
-        'pizzeria': Pizzeria
+        'pizzeria': Pizzeria,
+        'werewolf_linguist': WerewolfLinguist
       },
 
       ROLE_classes: [
@@ -87,7 +88,8 @@ class WerewolfGame extends React.Component {
         Ninjya,
         WeakWerewolf,
         LoneWerewolf,
-        Pizzeria
+        Pizzeria,
+        WerewolfLinguist
       ]
     }
     this.state = {
@@ -111,7 +113,8 @@ class WerewolfGame extends React.Component {
         'ninjya': 0,
         'weak_werewolf': 0,
         'lone_werewolf': 0,
-        'pizzeria': 0
+        'pizzeria': 0,
+        'werewolf_linguist': 0
       },
       suspected_players: [],
       current_player_id: 0,
@@ -280,8 +283,25 @@ class WerewolfGame extends React.Component {
       return -1
     }
 
+
+
     let killed_player = this.state.night_action_to_be_killed[0];
     if (turn === 1 || killed_player.protected) {
+      return -1
+    }
+
+    if (killed_player.role === 'werewolf_linguist') {
+      killed_player.role = 'werewolf';
+      killed_player.role = 'werewolf';
+      killed_player.role_jp = '人狼';
+      killed_player.side = 1;
+      killed_player.winning_side = 1
+      killed_player.saw = 1;
+      killed_player.perceived = '人狼'
+      killed_player.killable = false;
+      killed_player.action_sentence = '今晩襲う人を決めてください｡';
+      killed_player.night_action = 'kill'
+      killed_player.description = '夜に殺害する人を一人選ぶ。 最後の人狼に最終決定権がある。人狼同士は誰が人狼かわかっている。 人狼同士は殺し合えない。'
       return -1
     }
 
@@ -434,7 +454,7 @@ class WerewolfGame extends React.Component {
   }
 
   handleWinningSide() {
-    if (this.numberOfAliveVillagers() === this.numberOfAliveWerewolves()) {
+    if (this.numberOfAliveVillagers() <= this.numberOfAliveWerewolves()) {
       return 1
     } else if (this.numberOfAliveWerewolves() === 0) {
       return 0

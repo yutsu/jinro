@@ -25,7 +25,7 @@ const ConfirmChoiceAtExile = (props) => {
     if (!props.hide_options) {
         return (
             <div className='widget widget__confirm'>
-                <p className='widget widget__confirm-message'>{confirm_message}</p>
+                <div className='widget widget__confirm-message'>{confirm_message}</div>
                 <div className='button-wrapper'>
                     <button
                         className='button-list'
