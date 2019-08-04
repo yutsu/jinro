@@ -175,6 +175,16 @@ class Pizzeria extends Villager {
   }
 }
 
+class ImpatientPizzeria extends Pizzeria {
+  constructor(name) {
+    super(name);
+    this.role = 'impatient_pizzeria';
+    this.role_jp = 'せっかちピザ屋さん';
+    this.night_action = 'fast_deliver_pizza';
+    this.description = '村人側。毎晩ピザを届ける人を選ぶ。ピザは次の日の夜に届く。届けた相手にはピザ屋だとバレる。せっかちなので最初の夜からピザの送り先を指定する。'
+  }
+}
+
 class WerewolfLinguist extends Villager{
   constructor(name){
     super(name);
@@ -185,4 +195,16 @@ class WerewolfLinguist extends Villager{
   }
 }
 
-export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, WerewolfLinguist};
+class Wolfman extends Villager{
+  constructor(name){
+    super(name);
+    this.role = 'wolfman';
+    this.role_jp = '狼男';
+    this.night_action = 'kill';
+    this.action_sentence = '狼に変身しました。今晩襲う人を決めてください｡';
+    this.description = '村人側。しかし夜には狼に変身してしまう。人狼や狼信者に正体はバレない。';
+  }
+}
+
+
+export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, ImpatientPizzeria, WerewolfLinguist, Wolfman};

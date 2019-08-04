@@ -18,7 +18,7 @@ import RoleDescription from './components/RoleDescription';
 import RoleOptions from './components/RoleOptions';
 import ShowRole from './components/ShowRole';
 import Timer from './components/Timer';
-import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, WerewolfLinguist} from './components/Roles';
+import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, ImpatientPizzeria, WerewolfLinguist, Wolfman} from './components/Roles';
 
 
 
@@ -70,7 +70,9 @@ class WerewolfGame extends React.Component {
         'weak_werewolf': WeakWerewolf,
         'lone_werewolf': LoneWerewolf,
         'pizzeria': Pizzeria,
-        'werewolf_linguist': WerewolfLinguist
+        'impatient_pizzeria': ImpatientPizzeria,
+        'werewolf_linguist': WerewolfLinguist,
+        'wolfman': Wolfman
       },
 
       ROLE_classes: [
@@ -89,7 +91,9 @@ class WerewolfGame extends React.Component {
         WeakWerewolf,
         LoneWerewolf,
         Pizzeria,
-        WerewolfLinguist
+        ImpatientPizzeria,
+        WerewolfLinguist,
+        Wolfman
       ]
     }
     this.state = {
@@ -114,7 +118,9 @@ class WerewolfGame extends React.Component {
         'weak_werewolf': 0,
         'lone_werewolf': 0,
         'pizzeria': 0,
-        'werewolf_linguist': 0
+        'impatient_pizzeria': 0,
+        'werewolf_linguist': 0,
+        'wolfman': 0
       },
       suspected_players: [],
       current_player_id: 0,
@@ -219,7 +225,13 @@ class WerewolfGame extends React.Component {
   }
 
   nightActionRecord(current_player_id, player, target_player, n_players) {
-    if (this.state.turn === 1 || ['suspect', 'perceive'].includes(player.night_action)) {
+    // turn 1 special action
+    if (player.night_action === 'fast_deliver_pizza') {
+      this.setState((prevState) => ({
+          pizza_order: [...this.state.pizza_order, ...[[player, target_player]]]})
+        )
+    //  turn 1 normal action
+    } else if (this.state.turn === 1 || ['suspect', 'perceive'].includes(player.night_action)) {
       this.setState((prevState) => ({
               suspected_players: prevState.suspected_players.concat(target_player.name)
             }));

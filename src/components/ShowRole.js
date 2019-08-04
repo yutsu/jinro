@@ -19,7 +19,7 @@ const ShowRole = (props) => {
       <div>
         <div className='widget widget__message'>
           <div className='msize'>{name}さんは<div className='widget__important-message bd lsize'>{player.role_jp}</div>です｡</div>
-          {props.turn === 1? turn_1_sentence: <p className='add-option-action'>{player.action_sentence}</p>}
+          {(props.turn === 1 && player.role !== 'impatient_pizzeria')? turn_1_sentence: <p className='add-option-action'>{player.action_sentence}</p>}
         </div>
 
         {props.turn > 1 ? <PsychicPerceive
