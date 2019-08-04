@@ -18,7 +18,7 @@ import RoleDescription from './components/RoleDescription';
 import RoleOptions from './components/RoleOptions';
 import ShowRole from './components/ShowRole';
 import Timer from './components/Timer';
-import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, ImpatientPizzeria, WerewolfLinguist, Wolfman} from './components/Roles';
+import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, ImpatientPizzeria, WerewolfLinguist, Wolfman, Tolkative} from './components/Roles';
 
 
 
@@ -72,7 +72,8 @@ class WerewolfGame extends React.Component {
         'pizzeria': Pizzeria,
         'impatient_pizzeria': ImpatientPizzeria,
         'werewolf_linguist': WerewolfLinguist,
-        'wolfman': Wolfman
+        'wolfman': Wolfman,
+        'tolkative': Tolkative
       },
 
       ROLE_classes: [
@@ -93,7 +94,8 @@ class WerewolfGame extends React.Component {
         Pizzeria,
         ImpatientPizzeria,
         WerewolfLinguist,
-        Wolfman
+        Wolfman,
+        Tolkative
       ]
     }
     this.state = {
@@ -120,7 +122,8 @@ class WerewolfGame extends React.Component {
         'pizzeria': 0,
         'impatient_pizzeria': 0,
         'werewolf_linguist': 0,
-        'wolfman': 0
+        'wolfman': 0,
+        'tolkative': 0
       },
       suspected_players: [],
       current_player_id: 0,

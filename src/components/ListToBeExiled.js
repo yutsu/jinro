@@ -3,6 +3,13 @@ import React from 'react';
 const ListToBeExiled = (props) => {
   return(
     <div>
+      <div className="widget">
+        {props.players_with_roles
+          .filter((player) => (player.role === 'tolkative' && player.alive === false))
+          .map((player) => <div className='widget__message'>{player.name}さんも議論に参加できます。</div>)
+        }
+      </div>
+
       <div className='button-wrapper'>
         {props.players_with_roles.map((player) => {
           if (player.alive){
@@ -11,7 +18,6 @@ const ListToBeExiled = (props) => {
                 className='button-list'
                 key={player.name}
                 onClick={(e) => {
-                  // props.exile(player)
                   props.choiceConfirmAtExilePhase(player)
                   }
                 }

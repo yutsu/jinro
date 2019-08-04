@@ -201,10 +201,19 @@ class Wolfman extends Villager{
     this.role = 'wolfman';
     this.role_jp = '狼男';
     this.night_action = 'kill';
-    this.action_sentence = '狼に変身しました。今晩襲う人を決めてください｡';
+    this.action_sentence = '狼に変身しました。 今晩襲う人を決めてください｡';
     this.description = '村人側。しかし夜には狼に変身してしまう。人狼や狼信者に正体はバレない。';
   }
 }
 
+class Tolkative extends Villager{
+  constructor(name){
+    super(name);
+    this.role = 'tolkative';
+    this.role_jp = 'おしゃべり';
+    this.description = '村人側。死んでも追放会議に参加できる。';
+  }
+}
 
-export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, ImpatientPizzeria, WerewolfLinguist, Wolfman};
+
+export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, ImpatientPizzeria, WerewolfLinguist, Wolfman, Tolkative};
