@@ -74,57 +74,18 @@ class WerewolfGame extends React.Component {
         'werewolf_linguist': WerewolfLinguist,
         'wolfman': Wolfman,
         'tolkative': Tolkative
-      },
+      }
+    };
 
-      ROLE_classes: [
-        Villager,
-        Werewolf,
-        Seer,
-        Knight,
-        Traitor,
-        WerewolfBeliever,
-        Baker,
-        Psychic,
-        Haunted,
-        WerewolfGod,
-        Sage,
-        Ninjya,
-        WeakWerewolf,
-        LoneWerewolf,
-        Pizzeria,
-        ImpatientPizzeria,
-        WerewolfLinguist,
-        Wolfman,
-        Tolkative
-      ]
-    }
+    let n_each_role = {};
+    Object.keys(this.prop.ROLES).map((role) => n_each_role[role] = 0);
+
     this.state = {
       players: [],
-      players_selected: false,
       players_with_roles: [],
       role_determined: false,
       phase: 'night_confirm',
-      n_each_role: {
-        'villager':0,
-        'werewolf':0,
-        'seer':0,
-        'knight':0,
-        'traitor':0,
-        'werewolf_believer': 0,
-        'baker': 0,
-        'psychic': 0,
-        'haunted': 0,
-        'werewolf_god': 0,
-        'sage': 0,
-        'ninjya': 0,
-        'weak_werewolf': 0,
-        'lone_werewolf': 0,
-        'pizzeria': 0,
-        'impatient_pizzeria': 0,
-        'werewolf_linguist': 0,
-        'wolfman': 0,
-        'tolkative': 0
-      },
+      n_each_role: n_each_role,
       suspected_players: [],
       current_player_id: 0,
       night_action_to_be_killed: [],
@@ -150,6 +111,7 @@ class WerewolfGame extends React.Component {
     } catch (e) {
       // Do nothing at all
     }
+
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevState.players.length !== this.state.players.length) {
@@ -416,11 +378,12 @@ class WerewolfGame extends React.Component {
     console.log('restart')
     this.setState(() => ({ players_with_roles: [] }));
     this.setState(() => ({ role_determined: false }));
-    this.setState(() => ({ phase: 'night' }));
+    this.setState(() => ({ phase: 'night_confirm' }));
     this.setState(() => ({ suspected_players: [] }));
     this.setState(() => ({ current_player_id: 0 }));
     this.setState(() => ({ night_action_to_be_killed: [] }));
     this.setState(() => ({ to_be_exiled: []}));
+    this.setState(() => ({ to_be_confirmed: []}));
     this.setState(() => ({ outcome_of_seer: []}));
     this.setState(() => ({ pizza_order: []}));
     this.setState(() => ({ pizza_delivery: []}));
@@ -532,22 +495,19 @@ class WerewolfGame extends React.Component {
               players={this.state.players}
               handleDeleteOptions={this.handleDeleteOptions}
               handleDeleteOption={this.handleDeleteOption}
-              players_selected={this.state.players_selected}
             />
             <AddOption
               handleAddOption={this.handleAddOption}
-              players_selected={this.state.players_selected}
             />
           </div>
 
           <RoleDescription
-            roleClasses={this.prop.ROLE_classes}
+            roleClasses={Object.values(this.prop.ROLES)}
           />
 
           <RoleOptions
-            players_selected={this.state.players_selected}
             updateNumberOfRoles={this.updateNumberOfRoles}
-            roleClasses={this.prop.ROLE_classes}
+            roleClasses={Object.values(this.prop.ROLES)}
           />
 
           <CheckNumberOfPlayersAndRoles

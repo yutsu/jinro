@@ -40,6 +40,28 @@
     margin: $m-size;
 }
 
+.button-list-confirm {
+    background: $purple;
+    border: none;
+    border-bottom: .3rem solid darken($purple, 10%);
+    color: white;
+    font-weight: 500;
+    padding: $s-size;
+    width:150px;
+    height:100px;
+    margin: $m-size;
+}
+
+.button-list-confirm {
+  -webkit-transform: translateY(2px);
+  transform: translateY(2px);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+  border-bottom: none;
+}
+.button-list-confirm:disabled {
+    opacity: .2;
+    }
+
 .button-no-exile {
     background: $red;
     border: none;

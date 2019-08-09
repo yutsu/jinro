@@ -19,7 +19,7 @@ const DisplayWerewolves = (props) => {
                   }
                 })}
 
-                {props.night_action_to_be_killed.length === 0 ? <div></div>: <div className='widget__message'>{props.night_action_to_be_killed[0].name}さんを襲撃する予定です。違う人を襲うことも可能です。</div>}
+                {props.night_action_to_be_killed.length !== 0 && <div className='widget__message'>{props.night_action_to_be_killed[0].name}さんを襲撃する予定です。違う人を襲うことも可能です。</div>}
 
             </div>)
     } else if (props.current_player.role === 'werewolf_believer') {

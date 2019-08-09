@@ -3,9 +3,6 @@ import Option from './Option';
 
 
 const Options = (props) => {
-  if (props.players_selected){
-    return(<div></div>)
-  }
   return (
     <div>
       <div className='widget-header'>

@@ -21,9 +21,6 @@ export default class AddOption extends React.Component {
     }
   }
   render() {
-    if (this.props.players_selected){
-      return(<div></div>)
-    }
     return (
       <div>
         {this.state.error && <p className='add-option-error'>{this.state.error}</p>}
