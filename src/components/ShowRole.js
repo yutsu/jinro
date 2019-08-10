@@ -3,6 +3,7 @@ import ShowListOfPlayers from './ShowListOfPlayers';
 import DisplayWerewolves from './DisplayWerewolves';
 import PsychicPerceive from './PsychicPerceive';
 import PizzaDelivery from './PizzaDelivery';
+import SamuraiAction from './SamuraiAction';
 
 const ShowRole = (props) => {
   let player = props.players_with_roles[props.current_player_id];
@@ -12,6 +13,19 @@ const ShowRole = (props) => {
       <p className='add-option-action'>人狼だと思う人を選んでください。</p>
       <p>(最初の夜はどの役の人も疑うことのみをします。)</p>
     </div>
+    )
+
+  let button_next_player = (
+      <div className='button-wrapper'>
+        <button
+          className='button-single'
+          onClick={() => (
+          props.nextPlayer(props.current_player_id, player.role, Object.keys(props.players_with_roles).length))
+          }
+        >
+        {player.night_action === 'samurai_kill' ? 'スキップして次のプレーヤーへ': '次のプレーヤーへ'}
+        </button>
+      </div>
     )
 
   if (player.alive){
@@ -34,6 +48,11 @@ const ShowRole = (props) => {
           current_player={player}
         /> : <span></span>}
 
+        {props.turn > 1 ? <SamuraiAction
+          current_player={player}
+        />  : <span></span>}
+        {(player.night_action === 'samurai_kill' && player.can_skip_action) && button_next_player}
+
         <DisplayWerewolves
           current_player={player}
           players_with_roles={props.players_with_roles}
@@ -48,16 +67,7 @@ const ShowRole = (props) => {
           nextPlayer={props.nextPlayer}
           choiceConfirmPhase={props.choiceConfirmPhase}
         />:
-        <div className='button-wrapper'>
-          <button
-            className='button-single'
-            onClick={() => (
-            props.nextPlayer(props.current_player_id, player.role, Object.keys(props.players_with_roles).length))
-            }
-          >
-          次のプレーヤーへ
-          </button>
-        </div>}
+        {button_next_player}}
 
 
       </div>
@@ -66,16 +76,7 @@ const ShowRole = (props) => {
     return (
       <div>
         <p className='widget widget__message'>{name}さんは死んでいます｡</p>
-        <div className="button-wrapper">
-          <button
-            className='button-single'
-            onClick={() => (
-            props.nextPlayer(props.current_player_id, player.role, Object.keys(props.players_with_roles).length))
-            }
-          >
-          次のプレーヤーへ
-          </button>
-        </div>
+        {button_next_player}
       </div>)
   }
 

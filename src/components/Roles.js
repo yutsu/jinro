@@ -215,5 +215,29 @@ class Tolkative extends Villager{
   }
 }
 
+class Samurai extends Villager{
+  constructor(name){
+    super(name);
+    this.role = 'samurai';
+    this.role_jp = '侍';
+    this.night_action = 'samurai_kill';
+    this.you_can_kill = 1;
+    this.can_skip_action = true;
+    this.action_sentence = '斬り殺す人を一人選べます。';
+    this.description = '村人側。ゲーム中に一回のみ選んだ人を斬り殺す。騎士に守られた人や忍者でも容赦しない。';
+  }
+}
 
-export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, ImpatientPizzeria, WerewolfLinguist, Wolfman, Tolkative};
+class BadSamurai extends Samurai{
+  constructor(name){
+    super(name);
+    this.role = 'bad_samurai';
+    this.role_jp = '人斬り侍';
+    this.action_sentence = '斬り殺す人を選んでください。'
+    this.you_can_kill = 10000;
+    this.can_skip_action = false;
+    this.description = '村人側。最凶の侍。毎ターン必ず一人を選んで斬殺する。騎士に守られた人や忍者でも容赦しない。';
+  }
+}
+
+export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, ImpatientPizzeria, WerewolfLinguist, Wolfman, Tolkative, Samurai, BadSamurai};

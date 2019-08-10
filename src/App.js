@@ -18,7 +18,7 @@ import RoleDescription from './components/RoleDescription';
 import RoleOptions from './components/RoleOptions';
 import ShowRole from './components/ShowRole';
 import Timer from './components/Timer';
-import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, ImpatientPizzeria, WerewolfLinguist, Wolfman, Tolkative} from './components/Roles';
+import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, ImpatientPizzeria, WerewolfLinguist, Wolfman, Tolkative, Samurai, BadSamurai} from './components/Roles';
 
 
 
@@ -34,6 +34,7 @@ class WerewolfGame extends React.Component {
     this.determineRoles = this.determineRoles.bind(this);
     this.nightActionRecord = this.nightActionRecord.bind(this);
     this.handleKilledAtNight = this.handleKilledAtNight.bind(this);
+    this.handleSamuraiKilledAtNight = this.handleSamuraiKilledAtNight.bind(this);
     this.handlePizzaOrder = this.handlePizzaOrder.bind(this);
     this.handleWinningSide = this.handleWinningSide.bind(this);
     this.mostSuspiciousPlayer = this.mostSuspiciousPlayer.bind(this);
@@ -51,6 +52,7 @@ class WerewolfGame extends React.Component {
     this.removeProtection = this.removeProtection.bind(this);
     this.resetSuspectedPlayers = this.resetSuspectedPlayers.bind(this);
     this.resetToBeKilledPlayer = this.resetToBeKilledPlayer.bind(this);
+    this.resetToBeSamuraiKilledPlayer = this.resetToBeSamuraiKilledPlayer.bind(this);
     this.restart = this.restart.bind(this);
     this.setTimerSeconds = this.setTimerSeconds.bind(this);
     this.prop = {
@@ -73,7 +75,9 @@ class WerewolfGame extends React.Component {
         'impatient_pizzeria': ImpatientPizzeria,
         'werewolf_linguist': WerewolfLinguist,
         'wolfman': Wolfman,
-        'tolkative': Tolkative
+        'tolkative': Tolkative,
+        'samurai': Samurai,
+        'bad_samurai': BadSamurai
       }
     };
 
@@ -89,6 +93,7 @@ class WerewolfGame extends React.Component {
       suspected_players: [],
       current_player_id: 0,
       night_action_to_be_killed: [],
+      night_action_to_be_samurai_killed: [],
       to_be_exiled: [],
       outcome_of_seer: [],
       pizza_order: [],
@@ -211,6 +216,15 @@ class WerewolfGame extends React.Component {
                 night_action_to_be_killed: [target_player]
               }));
       }
+    } else if (player.night_action === 'samurai_kill') {
+      this.setState((prevState) => ({
+              night_action_to_be_samurai_killed: [...this.state.night_action_to_be_samurai_killed,target_player]
+            }));
+      player.you_can_kill -= 1;
+      if (player.you_can_kill === 0) {
+        player.night_action = 'suspect';
+        player.action_sentence = 'もっとも疑わしい人を一人選んでください｡ (刀が錆びている。。。)'
+      }
     } else if (['see', 'see_role'].includes(player.night_action)) {
       this.setState({ outcome_of_seer: [target_player]})
     } else if (player.night_action === 'protect') {
@@ -260,8 +274,6 @@ class WerewolfGame extends React.Component {
       return -1
     }
 
-
-
     let killed_player = this.state.night_action_to_be_killed[0];
     if (turn === 1 || killed_player.protected) {
       return -1
@@ -287,6 +299,22 @@ class WerewolfGame extends React.Component {
     }
     return killed_player.name
   }
+
+  handleSamuraiKilledAtNight(turn){
+    let samurai_killed_players = this.state.night_action_to_be_samurai_killed;
+
+    if (turn === 1 || samurai_killed_players.length === 0) {
+      return -1
+    } else {
+      let player;
+      for (player of samurai_killed_players) {
+        player.alive = false;
+      }
+
+      return samurai_killed_players.map((player) => (player.name))
+    }
+  }
+
 
   mostSuspiciousPlayer(dead){
     let memo = {}
@@ -327,6 +355,7 @@ class WerewolfGame extends React.Component {
     this.morningActionCompletedPhase();
     this.resetSuspectedPlayers();
     this.resetToBeKilledPlayer();
+    this.resetToBeSamuraiKilledPlayer();
   }
   exile2(player, perceived) {
     this.setState((prevState) => ({to_be_exiled: [player, perceived] }));
@@ -374,6 +403,10 @@ class WerewolfGame extends React.Component {
     this.setState(() => ({ night_action_to_be_killed: []}))
   }
 
+  resetToBeSamuraiKilledPlayer () {
+    this.setState(() => ({ night_action_to_be_samurai_killed: []}))
+  }
+
   restart() {
     console.log('restart')
     this.setState(() => ({ players_with_roles: [] }));
@@ -382,6 +415,7 @@ class WerewolfGame extends React.Component {
     this.setState(() => ({ suspected_players: [] }));
     this.setState(() => ({ current_player_id: 0 }));
     this.setState(() => ({ night_action_to_be_killed: [] }));
+    this.setState(() => ({ night_action_to_be_samurai_killed: [] }));
     this.setState(() => ({ to_be_exiled: []}));
     this.setState(() => ({ to_be_confirmed: []}));
     this.setState(() => ({ outcome_of_seer: []}));
@@ -578,7 +612,9 @@ class WerewolfGame extends React.Component {
         <ResultOfNight
           suspected_players={this.suspected_players}
           night_action_to_be_killed={this.night_action_to_be_killed}
+          night_action_to_be_samurai_killed={this.night_action_to_be_samurai_killed}
           handleKilledAtNight={this.handleKilledAtNight}
+          handleSamuraiKilledAtNight={this.handleSamuraiKilledAtNight}
           handleWinningSide={this.handleWinningSide}
           mostSuspiciousPlayer={this.mostSuspiciousPlayer}
           morningPhase={this.morningPhase}
