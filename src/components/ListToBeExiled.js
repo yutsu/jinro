@@ -6,7 +6,7 @@ const ListToBeExiled = (props) => {
       <div className="widget">
         {props.players_with_roles
           .filter((player) => (player.role === 'tolkative' && player.alive === false))
-          .map((player) => <div className='widget__message'>{player.name}さんも議論に参加できます。</div>)
+          .map((player) => <div className='widget__message' key={player.name + 'talkative'}>{player.name}さんも議論に参加できます。</div>)
         }
       </div>
 

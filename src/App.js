@@ -316,11 +316,13 @@ class WerewolfGame extends React.Component {
   }
 
 
-  mostSuspiciousPlayer(dead){
+  mostSuspiciousPlayer(dead, dead_list){
     let memo = {}
     let x;
     for (x of this.state.suspected_players) {
       if (x === dead){ continue;}
+      if (dead_list !== -1 && dead_list.includes(x)){ continue;}
+
       if (memo[x]) {
         memo[x] ++;
       } else {

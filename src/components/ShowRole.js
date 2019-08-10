@@ -51,7 +51,7 @@ const ShowRole = (props) => {
         {props.turn > 1 ? <SamuraiAction
           current_player={player}
         />  : <span></span>}
-        {(player.night_action === 'samurai_kill' && player.can_skip_action) && button_next_player}
+        {(player.night_action === 'samurai_kill' && player.can_skip_action && props.turn > 1) && button_next_player}
 
         <DisplayWerewolves
           current_player={player}
@@ -67,7 +67,7 @@ const ShowRole = (props) => {
           nextPlayer={props.nextPlayer}
           choiceConfirmPhase={props.choiceConfirmPhase}
         />:
-        {button_next_player}}
+        button_next_player}
 
 
       </div>
@@ -76,7 +76,16 @@ const ShowRole = (props) => {
     return (
       <div>
         <p className='widget widget__message'>{name}さんは死んでいます｡</p>
-        {button_next_player}
+        <div className='button-wrapper'>
+        <button
+          className='button-single'
+          onClick={() => (
+          props.nextPlayer(props.current_player_id, player.role, Object.keys(props.players_with_roles).length))
+          }
+        >
+         '次のプレーヤーへ'
+        </button>
+      </div>
       </div>)
   }
 

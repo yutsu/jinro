@@ -5,10 +5,13 @@ const ResultOfNight = (props) => {
   let x = props.handleKilledAtNight(props.turn);
   props.removeProtection(); // xの後におくこと
   let z = props.handleSamuraiKilledAtNight(props.turn);
+  if (z !== -1) {
+    z = [...new Set(z)]
+  }
 
   let y = props.handleWinningSide();
 
-  let suspected_players = props.mostSuspiciousPlayer(x);
+  let suspected_players = props.mostSuspiciousPlayer(x, z);
   let baker_alive = props.isBakerAlive();
 
   let victim = '';
@@ -29,7 +32,6 @@ const ResultOfNight = (props) => {
   } else if (z === -1){
     victim = x + 'さん'
   } else {
-    console.log(z, x);
     if (!z.includes(x)){
       z.push(x);
     }
