@@ -12,6 +12,7 @@ import Header from './components/Header';
 import ListToBeExiled from './components/ListToBeExiled';
 import Options from './components/Options';
 import OutcomeOfSeer from './components/OutcomeOfSeer';
+import RandomRoles from './components/RandomRoles';
 import ResultOfMorning from './components/ResultOfMorning';
 import ResultOfNight from './components/ResultOfNight';
 import RoleDescription from './components/RoleDescription';
@@ -55,6 +56,7 @@ class WerewolfGame extends React.Component {
     this.resetToBeSamuraiKilledPlayer = this.resetToBeSamuraiKilledPlayer.bind(this);
     this.restart = this.restart.bind(this);
     this.setTimerSeconds = this.setTimerSeconds.bind(this);
+    this.toggleRandomSwitchRoles = this.toggleRandomSwitchRoles.bind(this);
     this.prop = {
        ROLES: {
         'villager': Villager,
@@ -100,6 +102,7 @@ class WerewolfGame extends React.Component {
       pizza_delivery: [],
       to_be_confirmed: [],
       hide_options: false,
+      random_switch_roles: false,
       turn: 1
     };
   }
@@ -167,12 +170,23 @@ class WerewolfGame extends React.Component {
       let role;
       for (role in n_each_role) {
         while (n_each_role[role] > 0) {
-          roles.push(role);
+          let random_role = role;
+          if (this.state.random_switch_roles) {
+            random_role = this.randomlySwitchRoles(role);
+            // console.log('new role');
+          }
+          roles.push(random_role);
           n_each_role[role] --;
         }
       }
 
       // shuffle roles
+      for (let i = roles.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [roles[i], roles[j]] = [roles[j], roles[i]];
+      }
+
+      // shuffle roles again
       for (let i = roles.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [roles[i], roles[j]] = [roles[j], roles[i]];
@@ -193,6 +207,30 @@ class WerewolfGame extends React.Component {
       console.log(this.numberOfSelectedRoles());
     }
   }
+
+  randomlySwitchRoles(role) {
+    let role_list = Object.keys(this.prop.ROLES);
+    let CurRole = new this.prop.ROLES[role]('anonymous');
+    let side = CurRole.side;
+
+    const j = Math.floor(Math.random() * role_list.length)
+    let new_role = role_list[j];
+    let NewRole = new this.prop.ROLES[new_role]('anonymous');
+    console.log(NewRole.side === side);
+    if (NewRole.side === side) {
+      return new_role
+    } else {
+      return role
+    }
+  }
+
+  toggleRandomSwitchRoles() {
+    this.setState((prevState) => ({
+      random_switch_roles: !prevState.random_switch_roles
+    }))
+  }
+
+
 
   nightActionRecord(current_player_id, player, target_player, n_players) {
     // turn 1 special action
@@ -423,6 +461,7 @@ class WerewolfGame extends React.Component {
     this.setState(() => ({ outcome_of_seer: []}));
     this.setState(() => ({ pizza_order: []}));
     this.setState(() => ({ pizza_delivery: []}));
+    this.setState(() => ({ random_switch_roles: false }));
     this.setState(() => ({ turn: 1}));
   }
 
@@ -550,6 +589,10 @@ class WerewolfGame extends React.Component {
             players={this.state.players}
             n_each_role={this.state.n_each_role}
             determineRoles={this.determineRoles}
+          />
+
+          <RandomRoles
+            toggleRandomSwitchRoles={this.toggleRandomSwitchRoles}
           />
         </div>
 
