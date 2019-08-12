@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Sound from 'react-sound';
 
 const ResultOfNight = (props) => {
   let x = props.handleKilledAtNight(props.turn);
@@ -52,6 +52,10 @@ const ResultOfNight = (props) => {
 
   return(
     <div className='widget'>
+      {props.bgm && <Sound
+                      url="sounds/spring-mountain1.mp3"
+                      playStatus={Sound.status.PLAYING}
+                    />}
       <div className='widget widget__message'>
         <p className='option option__text'>朝になりました｡</p>
         {baker_alive && <p className='option option__text'>パンの香ばしい香りが漂っています。</p>}

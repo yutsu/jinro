@@ -1,22 +1,22 @@
 import React from 'react';
 import Switch from "react-switch";
 
-export default class RandomRoles extends React.Component {
+export default class BGMOnOff extends React.Component {
   constructor(props) {
     super(props);
     this.handleToggle = this.handleToggle.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onClick = this.onClick.bind(this);
-    this.toggleRandomSwitchRoles = this.toggleRandomSwitchRoles.bind(this);
+    this.handleBGM = this.handleBGM.bind(this);
     this.state = {
       toggle: true,
-      checked: false
+      checked: true
     };
   }
 
   onClick(checked) {
     this.handleToggle();
-    this.toggleRandomSwitchRoles();
+    this.handleBGM();
     this.handleChange(checked);
   }
 
@@ -26,8 +26,8 @@ export default class RandomRoles extends React.Component {
     }))
   }
 
-  toggleRandomSwitchRoles() {
-    this.props.toggleRandomSwitchRoles();
+  handleBGM() {
+    this.props.handleBGM();
   }
 
   handleChange(checked) {
@@ -40,7 +40,7 @@ export default class RandomRoles extends React.Component {
       <div>
         <div className='switch-wrapper'>
           <label>
-                  <span className='switch-sentence'>ランダム化する</span>
+                  <span className='switch-sentence'>BGMを有効化</span>
                   <Switch onChange={this.onClick} checked={this.state.checked} />
           </label>
         </div>

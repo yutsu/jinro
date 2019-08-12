@@ -3,6 +3,7 @@ import React from 'react';
 import './styles/App.scss';
 
 import AddOption from './components/AddOption';
+import BGMOnOff from './components/BGMOnOff';
 import CheckNumberOfPlayersAndRoles from './components/CheckNumberOfPlayersAndRoles';
 import ConfirmIdentity from './components/ConfirmIdentity';
 import ConfirmChoice from './components/ConfirmChoice';
@@ -30,6 +31,7 @@ class WerewolfGame extends React.Component {
     this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
     this.handlePick = this.handlePick.bind(this);
     this.handleAddOption = this.handleAddOption.bind(this);
+    this.handleBGM = this.handleBGM.bind(this);
     this.handleDeleteOption = this.handleDeleteOption.bind(this);
     this.updateNumberOfRoles = this.updateNumberOfRoles.bind(this);
     this.determineRoles = this.determineRoles.bind(this);
@@ -87,6 +89,7 @@ class WerewolfGame extends React.Component {
     Object.keys(this.prop.ROLES).map((role) => n_each_role[role] = 0);
 
     this.state = {
+      bgm: true,
       players: [],
       players_with_roles: [],
       role_determined: false,
@@ -153,6 +156,12 @@ class WerewolfGame extends React.Component {
     this.setState((prevState) => ({
       players: prevState.players.concat(option)
     }));
+  }
+
+  handleBGM() {
+    this.setState((prevState) => ({
+      bgm: !prevState.bgm
+    }))
   }
 
 
@@ -590,6 +599,9 @@ class WerewolfGame extends React.Component {
             determineRoles={this.determineRoles}
           />
 
+          <BGMOnOff
+            handleBGM={this.handleBGM}
+          />
           <RandomRoles
             toggleRandomSwitchRoles={this.toggleRandomSwitchRoles}
           />
@@ -637,6 +649,7 @@ class WerewolfGame extends React.Component {
     let night = (
       <div>
       <ShowRole
+        bgm={this.state.bgm}
         current_player_id={this.state.current_player_id}
         players_with_roles={this.state.players_with_roles}
         turn={this.state.turn}
@@ -654,6 +667,7 @@ class WerewolfGame extends React.Component {
     let night_result = (
       <div>
         <ResultOfNight
+          bgm={this.state.bgm}
           suspected_players={this.suspected_players}
           night_action_to_be_killed={this.night_action_to_be_killed}
           night_action_to_be_samurai_killed={this.night_action_to_be_samurai_killed}
@@ -675,6 +689,7 @@ class WerewolfGame extends React.Component {
       <div>
         <Timer
           setTimerSeconds={this.setTimerSeconds}
+          bgm={this.state.bgm}
         />
         <ListToBeExiled
           players_with_roles={this.state.players_with_roles}
@@ -686,6 +701,7 @@ class WerewolfGame extends React.Component {
     let morning_result = (
       <div>
         <ResultOfMorning
+          bgm={this.state.bgm}
           handleWinningSide={this.handleWinningSide}
           to_be_exiled={this.state.to_be_exiled}
           nightConfirmPhase={this.nightConfirmPhase}
@@ -698,6 +714,7 @@ class WerewolfGame extends React.Component {
     let game_result = (
       <div>
         <GameResult
+          bgm={this.state.bgm}
           handleWinningSide={this.handleWinningSide}
           players_with_roles={this.state.players_with_roles}
           restart={this.restart}

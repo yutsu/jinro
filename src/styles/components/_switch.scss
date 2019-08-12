@@ -1,0 +1,15 @@
+.switch-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: auto;
+    height: auto;
+    margin-bottom: $l-size;
+}
+
+.switch-sentence {
+    color: $off-white;
+    margin: 0;
+    padding: $m-size;
+    border-bottom: $s-size;
+    text-align: center;
+}

@@ -1,4 +1,6 @@
 import React from 'react';
+import Sound from 'react-sound';
+
 
 export default class ResultOfMorning extends React.Component {
   constructor(props) {
@@ -42,8 +44,20 @@ export default class ResultOfMorning extends React.Component {
         <div>
           <div className="widget">
             {this.props.to_be_exiled.length !== 0 ?
-              <div className='widget__message'>人狼だと疑われた{this.props.to_be_exiled[0]}さんは追放されました。</div>
-              : <div className='widget__message'>今朝は誰も追放されませんでした。</div>
+              <div>
+                {this.props.bgm && <Sound
+                      url="sounds/katana-gesture1.mp3"
+                      playStatus={Sound.status.PLAYING}
+                    />}
+                <div className='widget__message'>人狼だと疑われた{this.props.to_be_exiled[0]}さんは追放されました。</div>
+              </div>
+              : <div>
+                  <div className='widget__message'>今朝は誰も追放されませんでした。</div>
+                  {this.props.bgm && <Sound
+                        url="sounds/kira1.mp3"
+                        playStatus={Sound.status.PLAYING}
+                      />}
+              </div>
             }
           </div>
 
@@ -60,6 +74,10 @@ export default class ResultOfMorning extends React.Component {
     } else if (this.state.phase === 'continue_game') {
       return (
         <div>
+          {this.props.bgm && <Sound
+                      url="sounds/clock-tower-bell1.mp3"
+                      playStatus={Sound.status.PLAYING}
+                    />}
           <div className="widget">
             <div className="widget__message">
               夜が来ました。。。

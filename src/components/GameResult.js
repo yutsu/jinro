@@ -1,5 +1,6 @@
 import React from 'react';
 import WhoWon from './WhoWon';
+import Sound from 'react-sound';
 
 
 const GameResult = (props) => {
@@ -13,6 +14,10 @@ const GameResult = (props) => {
     if (y === 1) {
         return(
           <div className='widget'>
+            {props.bgm && <Sound
+                                  url="sounds/fate2.mp3"
+                                  playStatus={Sound.status.PLAYING}
+                                />}
             <h1 className='widget widget__important-message'>人狼の勝利!</h1>
             {who_won}
             <button
@@ -26,6 +31,10 @@ const GameResult = (props) => {
     } else if (y === 0) {
         return(
           <div className='widget'>
+            {props.bgm && <Sound
+                                  url="sounds/trumpet1.mp3"
+                                  playStatus={Sound.status.PLAYING}
+                                />}
             <h1 className='widget widget__important-message'>村人の勝利!</h1>
             {who_won}
 
