@@ -1,4 +1,6 @@
 import React from 'react';
+import Sound from 'react-sound';
+
 
 export default class Timer extends React.Component {
   constructor(props) {
@@ -35,8 +37,14 @@ export default class Timer extends React.Component {
       );
     } else {
       return (
-        <div className='widget'>
-          <p className='widget__message'>時間になりました。 投票で追放する人を決めてください。</p>
+        <div>
+          <Sound
+                url="sounds/fate1.mp3"
+                playStatus={Sound.status.PLAYING}
+              />
+          <div className='widget'>
+            <p className='widget__message'>時間になりました。 投票で追放する人を決めてください。</p>
+          </div>
         </div>
       );
     }

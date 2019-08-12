@@ -173,7 +173,6 @@ class WerewolfGame extends React.Component {
           let random_role = role;
           if (this.state.random_switch_roles) {
             random_role = this.randomlySwitchRoles(role);
-            // console.log('new role');
           }
           roles.push(random_role);
           n_each_role[role] --;

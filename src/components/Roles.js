@@ -12,7 +12,7 @@ class Villager extends Player{
     super(name);
     this.role = 'villager';
     this.role_jp = '村人';
-    this.side = 0; // 陣営
+    this.side = 0; // 勝敗のカウントに使われる陣営
     this.winning_side = 0;
     this.saw = 0 // 占い結果
     this.perceived = '村人' // 霊能結果
