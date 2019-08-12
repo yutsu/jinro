@@ -47,6 +47,7 @@ export default class ResultOfMorning extends React.Component {
               <div>
                 {this.props.bgm && <Sound
                       url="sounds/katana-gesture1.mp3"
+                      autoLoad={true}
                       playStatus={Sound.status.PLAYING}
                     />}
                 <div className='widget__message'>人狼だと疑われた{this.props.to_be_exiled[0]}さんは追放されました。</div>
@@ -55,6 +56,7 @@ export default class ResultOfMorning extends React.Component {
                   <div className='widget__message'>今朝は誰も追放されませんでした。</div>
                   {this.props.bgm && <Sound
                         url="sounds/kira1.mp3"
+                        autoLoad={true}
                         playStatus={Sound.status.PLAYING}
                       />}
               </div>

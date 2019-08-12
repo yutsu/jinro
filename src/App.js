@@ -570,7 +570,10 @@ class WerewolfGame extends React.Component {
   render() {
     const subtitle = '村人 vs 人狼';
     let register = (<div>
-        <Header subtitle={subtitle} />
+        <Header
+          subtitle={subtitle}
+          bgm={this.state.bgm}
+          />
         <div className="container">
 
           <div className="widget">

@@ -54,6 +54,7 @@ const ResultOfNight = (props) => {
     <div className='widget'>
       {props.bgm && <Sound
                       url="sounds/spring-mountain1.mp3"
+                      autoLoad={true}
                       playStatus={Sound.status.PLAYING}
                     />}
       <div className='widget widget__message'>
