@@ -11,6 +11,9 @@
 # production
 /build
 
+#sounds
+.mp3
+
 # misc
 .DS_Store
 .env.local
