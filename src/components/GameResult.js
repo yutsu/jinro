@@ -17,6 +17,7 @@ const GameResult = (props) => {
             {props.bgm && <Sound
                                   url="sounds/fate2.mp3"
                                   autoLoad={true}
+                                  volume={30}
                                   playStatus={Sound.status.PLAYING}
                                 />}
             <h1 className='widget widget__important-message'>人狼の勝利!</h1>
@@ -35,6 +36,7 @@ const GameResult = (props) => {
             {props.bgm && <Sound
                                   url="sounds/trumpet1.mp3"
                                   autoLoad={true}
+                                  volume={30}
                                   playStatus={Sound.status.PLAYING}
                                 />}
             <h1 className='widget widget__important-message'>村人の勝利!</h1>

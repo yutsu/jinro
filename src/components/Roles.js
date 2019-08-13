@@ -18,7 +18,8 @@ class Villager extends Player{
     this.perceived = '村人' // 霊能結果
     this.killable = true; // 人狼に殺される可能性
     this.action_sentence = 'もっとも疑わしい人を一人選んでください｡';
-    this.night_action = 'suspect'
+    this.night_action = 'suspect';
+    this.random_level = 0; // 役職をランダムにするときの難易度
     this.description = '人に化けた狼が暮らす村に住む。夜には人狼だと疑う人にこっそり投票する。'
   }
 }
@@ -35,6 +36,7 @@ class Werewolf extends Player{
     this.killable = false;
     this.action_sentence = '今晩襲う人を決めてください｡';
     this.night_action = 'kill'
+    this.random_level = 0;
     this.description = '夜に殺害する人を一人選ぶ。 最後の人狼に最終決定権がある。人狼同士は誰が人狼かわかっている。 人狼同士は殺し合えない。'
   }
 }
@@ -107,6 +109,7 @@ class Haunted extends Villager{
     this.role_jp = '狼憑き';
     this.saw = 1;
     this.perceived = '人狼'
+    this.random_level = 1;
     this.description = '村人側。 狼にとりつかれた村人。 占い結果と霊媒結果に人狼と出てしまう。 そして村人同様に投票を行う。';
   }
 }
@@ -118,6 +121,7 @@ class WerewolfGod extends Werewolf {
     this.role_jp = '神狼';
     this.saw = 0;
     this.perceived = '神狼';
+    this.random_level = 1;
     this.description = '人狼側。 ただし占い結果に村人と出る。 霊媒結果は神狼となる。夜には通常の人狼同様に殺害する人を一人選ぶ。人狼と狼信者には人狼として知られている。'
   }
 }
@@ -128,6 +132,7 @@ class Sage extends Seer {
     this.role = 'sage';
     this.role_jp = '賢者';
     this.night_action ='see_role';
+    this.random_level = 1;
     this.description = '村人側。毎晩役職まで知ることができる占いを行う。'
   }
 }
@@ -160,6 +165,7 @@ class LoneWerewolf extends Werewolf {
     this.role = 'lone_werewolf';
     this.role_jp = '一匹狼';
     this.killable = true;
+    this.random_level = 1;
     this.description = '人狼側。 他の人狼や狼信者にも正体を知られていない人狼。また他の人狼が誰なのかわからない。仲間の人狼を殺す可能性と殺される可能性がある。'
   }
 }
@@ -191,6 +197,7 @@ class WerewolfLinguist extends Villager{
     this.role = 'werewolf_linguist';
     this.role_jp = '狼言語学者';
     this.winning_side = 1;
+    this.random_level = 1;
     this.description = '人狼側。 しかし占いの結果と霊媒結果には村人側と出る。夜には村人と同様に投票を行う。人狼は誰が狼言語学者か知らず, 狼言語学者も誰が人狼かわからない。狼の言語がわかり狼に襲撃されると, 命を助ける代わりに狼にされる。変身後は狼と同様。騎士に守られた場合には変身しない。';
   }
 }
@@ -201,6 +208,7 @@ class Wolfman extends Villager{
     this.role = 'wolfman';
     this.role_jp = '狼男';
     this.night_action = 'kill';
+    this.random_level = 1;
     this.action_sentence = '狼に変身しました。 今晩襲う人を決めてください｡';
     this.description = '村人側。しかし夜には狼に変身してしまう。人狼や狼信者に正体はバレない。';
   }
@@ -224,6 +232,7 @@ class Samurai extends Villager{
     this.you_can_kill = 1;
     this.can_skip_action = true;
     this.action_sentence = '斬り殺す人を一人選べます。';
+    this.random_level = 1
     this.description = '村人側。ゲーム中に一回のみ選んだ人を斬り殺す。騎士に守られた人や忍者でも容赦しない。';
   }
 }
@@ -236,8 +245,20 @@ class BadSamurai extends Samurai{
     this.action_sentence = '斬り殺す人を選んでください。'
     this.you_can_kill = 10000;
     this.can_skip_action = false;
+    this.random_level = 2;
     this.description = '村人側。最凶の侍。毎ターン必ず一人を選んで斬殺する。騎士に守られた人や忍者でも容赦しない。';
   }
 }
 
-export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, ImpatientPizzeria, WerewolfLinguist, Wolfman, Tolkative, Samurai, BadSamurai};
+class YoungSeer extends Seer{
+  constructor(name){
+    super(name);
+    this.role = 'young_seer';
+    this.role_jp = '半人前占い師';
+    this.role_jp_disguise = '占い師';
+    this.night_action = 'young_see';
+    this.description = '村人側。 占い結果がデタラメな未熟な占い師。自分の役職には占い師と表示されている。'
+  }
+}
+
+export {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, ImpatientPizzeria, WerewolfLinguist, Wolfman, Tolkative, Samurai, BadSamurai, YoungSeer};

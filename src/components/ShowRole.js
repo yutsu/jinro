@@ -3,7 +3,9 @@ import ShowListOfPlayers from './ShowListOfPlayers';
 import DisplayWerewolves from './DisplayWerewolves';
 import PsychicPerceive from './PsychicPerceive';
 import PizzaDelivery from './PizzaDelivery';
+import RoleDescription from './RoleDescription';
 import SamuraiAction from './SamuraiAction';
+import {CircleArrow as ScrollUpButton} from "react-scroll-up-button";
 
 const ShowRole = (props) => {
   let player = props.players_with_roles[props.current_player_id];
@@ -31,7 +33,7 @@ const ShowRole = (props) => {
   let alive_case = (
         <div>
           <div className='widget widget__message'>
-            <div className='msize'>{name}さんは<div className='widget__important-message bd lsize'>{player.role_jp}</div>です｡</div>
+            <div className='msize'>{name}さんは<div className='widget__important-message bd lsize'>{player.role_jp_disguise ? player.role_jp_disguise : player.role_jp}</div>です｡</div>
             {(props.turn === 1 && player.role !== 'impatient_pizzeria')? turn_1_sentence: <p className='add-option-action'>{player.action_sentence}</p>}
           </div>
 
@@ -68,6 +70,13 @@ const ShowRole = (props) => {
           />:
           button_next_player}
 
+          <RoleDescription
+            roleClasses={props.roleClasses}
+          />
+
+          <ScrollUpButton
+            ShowAtPosition={200}
+          />
 
         </div>
       )

@@ -7,7 +7,6 @@ const Header = (props) => {
         {props.bgm && <Sound
                           url="sounds/honobono-wonderland.mp3"
                           playStatus={Sound.status.PLAYING}
-                          autoLoad={true}
                           loop={true}
                           volume={30}
                         />}

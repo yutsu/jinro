@@ -27,13 +27,14 @@ export default class RoleDescription extends React.Component {
     let instances = this.classInstances(this.props.roleClasses);
     return (
       <div>
-
-        <button
-          className='button'
-          onClick={this.handleToggle}
-          >
-          {this.state.toggle ? <p>閉じる</p>: <p>各役職のルールを見る</p>}
-        </button>
+        <div className="button-wrapper">
+          <button
+            className='button-single'
+            onClick={this.handleToggle}
+            >
+            {this.state.toggle ? <p>閉じる</p>: <p>各役職のルールを見る</p>}
+          </button>
+        </div>
         <div className="widget">
           {this.state.toggle && instances.map((role) => {
             return (
@@ -54,10 +55,6 @@ export default class RoleDescription extends React.Component {
              閉じる
           </button>}
         </div>
-
-
-
-
       </div>
     );
   }

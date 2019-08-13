@@ -20,7 +20,7 @@ import RoleDescription from './components/RoleDescription';
 import RoleOptions from './components/RoleOptions';
 import ShowRole from './components/ShowRole';
 import Timer from './components/Timer';
-import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, ImpatientPizzeria, WerewolfLinguist, Wolfman, Tolkative, Samurai, BadSamurai} from './components/Roles';
+import {Villager, Werewolf, Seer, Knight, Traitor, WerewolfBeliever, Baker, Psychic, Haunted, WerewolfGod, Sage, Ninjya, WeakWerewolf, LoneWerewolf, Pizzeria, ImpatientPizzeria, WerewolfLinguist, Wolfman, Tolkative, Samurai, BadSamurai, YoungSeer} from './components/Roles';
 
 
 
@@ -36,6 +36,7 @@ class WerewolfGame extends React.Component {
     this.updateNumberOfRoles = this.updateNumberOfRoles.bind(this);
     this.determineRoles = this.determineRoles.bind(this);
     this.nightActionRecord = this.nightActionRecord.bind(this);
+    this.handle_random_level = this.handle_random_level.bind(this);
     this.handleKilledAtNight = this.handleKilledAtNight.bind(this);
     this.handleSamuraiKilledAtNight = this.handleSamuraiKilledAtNight.bind(this);
     this.handlePizzaOrder = this.handlePizzaOrder.bind(this);
@@ -81,7 +82,8 @@ class WerewolfGame extends React.Component {
         'wolfman': Wolfman,
         'tolkative': Tolkative,
         'samurai': Samurai,
-        'bad_samurai': BadSamurai
+        'bad_samurai': BadSamurai,
+        'young_seer': YoungSeer
       }
     };
 
@@ -103,6 +105,7 @@ class WerewolfGame extends React.Component {
       outcome_of_seer: [],
       pizza_order: [],
       pizza_delivery: [],
+      random_level: 0,
       to_be_confirmed: [],
       hide_options: false,
       random_switch_roles: false,
@@ -174,6 +177,7 @@ class WerewolfGame extends React.Component {
     if (this.numberOfPlayers() === this.numberOfSelectedRoles()){
       this.setState(() => ({ role_determined: true }));
 
+      let level = this.state.random_level;
       let roles = [];
       let n_each_role = this.state.n_each_role;
       let role;
@@ -181,7 +185,7 @@ class WerewolfGame extends React.Component {
         while (n_each_role[role] > 0) {
           let random_role = role;
           if (this.state.random_switch_roles) {
-            random_role = this.randomlySwitchRoles(role);
+            random_role = this.randomlySwitchRoles(role, level);
           }
           roles.push(random_role);
           n_each_role[role] --;
@@ -216,7 +220,7 @@ class WerewolfGame extends React.Component {
     }
   }
 
-  randomlySwitchRoles(role) {
+  randomlySwitchRoles(role, level=0) {
     let role_list = Object.keys(this.prop.ROLES);
     let CurRole = new this.prop.ROLES[role]('anonymous');
     let side = CurRole.side;
@@ -224,18 +228,36 @@ class WerewolfGame extends React.Component {
     const j = Math.floor(Math.random() * role_list.length)
     let new_role = role_list[j];
     let NewRole = new this.prop.ROLES[new_role]('anonymous');
-    console.log(NewRole.side === side);
-    if (NewRole.side === side) {
-      return new_role
+
+    if (level === 2) {
+      if (NewRole.side === side) {
+        return new_role
+      } else {
+        return role
+      }
+    } else if (level === 0){
+      if (NewRole.side === side && NewRole.random_level === 0) {
+        return new_role
+      } else {
+        return role
+      }
     } else {
-      return role
-    }
+      if (NewRole.side === side && NewRole.random_level <= 1) {
+              return new_role
+            } else {
+              return role
+            }
+     }
   }
 
   toggleRandomSwitchRoles() {
     this.setState((prevState) => ({
       random_switch_roles: !prevState.random_switch_roles
     }))
+  }
+
+  handle_random_level(value) {
+    this.setState( { random_level: value })
   }
 
 
@@ -271,7 +293,7 @@ class WerewolfGame extends React.Component {
         player.night_action = 'suspect';
         player.action_sentence = 'もっとも疑わしい人を一人選んでください｡ (刀が錆びている。。。)'
       }
-    } else if (['see', 'see_role'].includes(player.night_action)) {
+    } else if (['see', 'see_role', 'young_see'].includes(player.night_action)) {
       this.setState({ outcome_of_seer: [target_player]})
     } else if (player.night_action === 'protect') {
       target_player.protected = true
@@ -393,6 +415,7 @@ class WerewolfGame extends React.Component {
 
     return result
   }
+
   exile(player) {
     if (player !== undefined){
       player.alive = false;
@@ -524,6 +547,8 @@ class WerewolfGame extends React.Component {
     }
   }
 
+
+
   morningPhase() {
     this.setState(() => ({
     phase: 'morning'
@@ -607,6 +632,9 @@ class WerewolfGame extends React.Component {
           />
           <RandomRoles
             toggleRandomSwitchRoles={this.toggleRandomSwitchRoles}
+            random_level={this.random_level}
+            handle_random_level={this.handle_random_level}
+            roleClasses={Object.values(this.prop.ROLES)}
           />
         </div>
 
@@ -663,6 +691,7 @@ class WerewolfGame extends React.Component {
         night_action_to_be_killed={this.state.night_action_to_be_killed}
         pizza_order={this.state.pizza_order}
         pizza_delivery={this.state.pizza_delivery}
+        roleClasses={Object.values(this.prop.ROLES)}
       />
       </div>
       );

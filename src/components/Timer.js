@@ -41,6 +41,7 @@ export default class Timer extends React.Component {
           {this.props.bgm && <Sound
                 url="sounds/fate1.mp3"
                 autoLoad={true}
+                volume={50}
                 playStatus={Sound.status.PLAYING}
               />}
           <div className='widget'>

@@ -24,6 +24,33 @@
     text-align: center;
 }
 
+.widget__message_action_result{
+    color: white;
+    font-style: italic;
+    margin: $m-size 0 0 0;
+    padding: $l-size;
+    text-align: center;
+}
+.widget__in_random {
+    color: $off-white;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    float:left;
+}
+
+.widget__in_rando-wrapper {
+    margin-top: $s-size;
+    margin-bottom: $m-size;
+}
+
+.widget__description_in_random {
+    color: $off-white;
+    margin: 0 0 0 $m-size;
+    padding: 0;
+    text-align: left;
+}
+
 .widget__win-message {
     color: $yellow;
     margin: 0;
