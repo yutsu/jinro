@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/jinro/static/css/main.e8189137.chunk.css",
+    "main.js": "/jinro/static/js/main.fc562bc9.chunk.js",
+    "main.js.map": "/jinro/static/js/main.fc562bc9.chunk.js.map",
+    "runtime~main.js": "/jinro/static/js/runtime~main.8220ef53.js",
+    "runtime~main.js.map": "/jinro/static/js/runtime~main.8220ef53.js.map",
+    "static/css/2.e95dff61.chunk.css": "/jinro/static/css/2.e95dff61.chunk.css",
+    "static/js/2.645c79f0.chunk.js": "/jinro/static/js/2.645c79f0.chunk.js",
+    "static/js/2.645c79f0.chunk.js.map": "/jinro/static/js/2.645c79f0.chunk.js.map",
+    "index.html": "/jinro/index.html",
+    "precache-manifest.a2c66d92cc4758326ea3ca603d6cefe5.js": "/jinro/precache-manifest.a2c66d92cc4758326ea3ca603d6cefe5.js",
+    "service-worker.js": "/jinro/service-worker.js",
+    "static/css/2.e95dff61.chunk.css.map": "/jinro/static/css/2.e95dff61.chunk.css.map",
+    "static/css/main.e8189137.chunk.css.map": "/jinro/static/css/main.e8189137.chunk.css.map"
+  }
+}
