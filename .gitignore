@@ -13,6 +13,7 @@
 
 #sounds
 *.mp3
+/public/sounds/
 
 # misc
 .DS_Store
